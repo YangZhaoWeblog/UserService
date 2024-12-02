@@ -6,12 +6,12 @@
 package main
 
 import (
-	"qqShuiHu/internal/biz"
-	"qqShuiHu/internal/conf"
-	"qqShuiHu/internal/data"
 	diy_log "qqShuiHu/internal/log"
-	"qqShuiHu/internal/server"
-	"qqShuiHu/internal/service"
+	"qqShuiHu/internal/user/biz"
+	"qqShuiHu/internal/user/conf"
+	"qqShuiHu/internal/user/data"
+	"qqShuiHu/internal/user/server"
+	"qqShuiHu/internal/user/service"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/google/wire"

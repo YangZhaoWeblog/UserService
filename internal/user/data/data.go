@@ -3,7 +3,7 @@ package data
 import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
-	"qqShuiHu/internal/conf"
+	"qqShuiHu/internal/user/conf"
 )
 
 // ProviderSet is data providers.

@@ -7,13 +7,13 @@ import (
 	"log/slog"
 	"os"
 	"path/filepath"
+	"qqShuiHu/internal/user/conf"
 	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"gopkg.in/natefinch/lumberjack.v2"
-	"qqShuiHu/internal/conf"
 )
 
 // ProviderSet is a provider set for wire

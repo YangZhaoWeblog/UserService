@@ -4,7 +4,7 @@ import (
 	"flag"
 	"os"
 	"path/filepath"
-	"qqShuiHu/internal/conf"
+	"qqShuiHu/internal/user/conf"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/config"

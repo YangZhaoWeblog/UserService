@@ -1,0 +1,74 @@
+syntax = "proto3";
+package video.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "qqShuiHu/api/video/v1;v1";
+option java_multiple_files = true;
+option java_package = "dev.kratos.api.video.v1";
+option java_outer_classname = "videoProtoV1";
+
+service Video {
+  rpc PublishVideo (PublishVideoRequest) returns (PublishVideoReply) {
+    option (google.api.http) = {
+      post: "/video/publish"
+      body: "*"
+    };
+  }
+
+  //这个也需要鉴权，中间件白名单来做就行了
+  rpc GetFeedList (GetFeedListRequest) returns (GetFeedListReply) {
+    option (google.api.http) = {
+      get: "/video/feed_list"
+    };
+  }
+
+  rpc GetPublishVideoList (GetPublishVideoListRequest) returns (GetPublishVideoListReply) {
+    option (google.api.http) = {
+      get: "/video/publish_video_list"
+    };
+  }
+
+  rpc GetFavoriteVideoList (GetFavoriteVideoListRequest) returns(GetFavoriteVideoListReply) {
+    option (google.api.http) = {
+      get: "/video/favorite_video_list"
+    };
+  }
+
+}
+
+message GetFavoriteVideoListRequest{
+
+}
+
+message GetFavoriteVideoListReply {
+
+}
+
+message PublishVideoRequest {
+  int64 userId = 1;
+  string title = 2;
+  //bytes io.reader 在 form 表单里
+}
+
+// The response message containing the greetings
+message PublishVideoReply {
+  string message = 1;
+}
+
+
+message GetFeedListRequest{
+
+}
+
+message GetFeedListReply{
+
+}
+
+message  GetPublishVideoListRequest {
+
+}
+
+message GetPublishVideoListReply {
+
+}
