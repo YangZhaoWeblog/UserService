@@ -1,0 +1,1485 @@
+syntax = "proto2";
+
+package helloworld.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "joe_tiktok/api/core/v1;v1";
+option java_multiple_files = true;
+option java_package = "dev.kratos.api.core.v1";
+option java_outer_classname = "CoreProtoV1";
+
+service GameModel {
+    // Sends a greeting
+    rpc SayHello (ResUserLogin) returns (Response) {
+        option (google.api.http) = {
+            post: "/game_model/login"
+            body: "*"
+        };
+    }
+}
+
+message Response {
+
+}
+
+message ResUserLogin
+{
+    required Head head = 1;
+    optional uint32 sys_time = 2;
+    optional EvtSthChange sth_change = 3;
+    optional RoleBasic user_basic = 4;
+    optional UserQQInfo qq_info = 5;
+    repeated GlobalBuff global_buff = 6;
+    repeated uint32 show_heroes = 8;
+    optional RoleMine role_mine = 9;
+    repeated CdInfo cd_info = 10;
+    repeated TimesInfo times_info = 11;
+    repeated TaskInfo task_info = 12;
+    optional uint32 rookie_flag = 13;
+    optional Faction faction_info = 14;
+    optional LoginScene login_scene = 15;
+    optional uint32 go_home_bt = 16;
+    optional int32 share_rewards_num = 17;
+    optional LockInfo lock_info = 18;
+    optional FortInfo fort_info = 19;
+    optional OfflineData offline_data = 20;
+    optional uint32 uiGainTime = 21;
+    optional Pack pack = 22;
+    optional uint32 tf_npc_id = 23;
+    optional uint32 daily_invite_num = 24;
+    optional int32 hang_minutes = 25;
+    optional int32 next_online_rwd_id = 26;
+    optional uint32 max_play_hero_num =27;
+    optional uint32 act_start_exp = 28;
+    optional uint32 monster_hall_process = 29;
+    optional RoundRobinInfo round_robin_info = 30;
+    optional uint32 remain_resignin_times = 31;
+    optional uint32 cur_skin_id = 32;
+    optional uint32 total_skin_num = 33;
+    optional uint32 empty_bingpos = 34;
+    optional uint32 challenge3_id = 35;
+    optional uint32 act_start_level = 36;
+    optional string homeland_msg = 37;
+    optional GrowUpGuardInfo growup_info = 38;
+    optional JudgeLoginRspInfo cc_login_rsp = 39;
+    optional uint32 yin_si_shou_quan = 40;
+}
+
+message EvtSthChange
+{
+    optional RoleBasic user_info = 1;
+    repeated ClientHero hero_info = 2;
+    optional Pack pack_info = 3;
+    repeated TrainHero train_seats = 5;
+    repeated TrainHero train_heroes = 6;
+    repeated GlobalBuff global_buff = 7;
+    optional uint32 guide_id = 8;
+    repeated uint32 past_guide_id = 9;
+    repeated Weapon weapons = 10;
+    repeated Map1Info map1_changed = 11;
+    repeated Map2Info map2_changed = 12;
+    repeated Map3Info map3_changed = 13;
+    repeated TaskInfo task_info = 14;
+    repeated SelfTrainHero self_seats = 15;
+    repeated CdInfo cd_info = 16;
+    repeated TimesInfo times_info = 17;
+    optional RoleMine role_mine = 18;
+    optional Faction faction_info = 19;
+    optional RoleExtraSync extra_info = 20;
+
+    optional fixed32 active_hero_id = 21;
+    optional uint32 inherit_percent = 22;
+    optional fixed32 passive_hero_id = 32;
+    optional Farm farm = 33;
+    optional FortInfo fort_info = 34;
+    optional int32 challenge_ticket = 35;
+    optional FlashPerDayData per_day_data = 36;
+    optional FitInfo fit_info = 37;
+    optional RoundRobinInfo round_robin_info = 38;
+    optional int32 remain_pk_score = 39;
+    optional int32 challenge2_ticket = 40;
+
+    repeated SyncData need_sync =50;
+    optional Pack deserve_for_limited = 51;
+    optional SkinInfo skin_info = 52;
+    optional uint32 new_skin_idx = 53;
+    optional CountryBattleInfo country_battle_info = 54;
+
+    optional uint32 multi_forma_strength_1 = 55;
+    optional uint32 multi_forma_strength_2 = 56;
+
+    optional int32 challenge4_ticket = 57;
+    optional MilitaryAdviser military_adviser = 58;
+    optional LadderFactionInfo ladder_faction_info = 59;
+    optional AltarInfo altar_info = 60;
+    optional int32 gold_hero_num = 61;
+    optional City city_info = 62;
+    optional HeroSkinBook hero_skin_book = 63;
+    optional uint32 god_hero_num = 64;
+    optional StarMap start_map_info = 65;
+    optional GreatUniverse great_universe = 66;
+}
+
+message Head
+{
+    required uint32 seq = 1;
+    required uint32 uin = 2;
+    required uint32 cmd = 3;
+    optional string key  = 4;
+    optional uint32 comp  = 5;
+    optional uint32 ecode  = 6;
+    optional uint32 platform = 7;
+    optional uint32 ver = 8;
+    optional string secret = 9;
+    optional uint32 source = 10;
+    optional string lock_passwd = 11;
+    optional uint32 session_id = 12;
+    optional string pskey = 13;
+    optional string sid = 14;
+}
+
+
+message GUConstellation
+{
+    optional uint32 id = 1;
+    optional int32 level = 2;
+    optional int32 book_level = 3;
+}
+
+message GreatUniverse
+{
+    repeated GUConstellation gu_constellation = 1;
+}
+
+message StarMapCard
+{
+    optional uint32 id = 1;
+    optional int32 card_level = 2;
+    optional int32 start_level = 3;
+    repeated uint32 side_id_level_info = 10;
+}
+
+message StarCardInfo
+{
+    repeated StarMapCard star_map_card = 1;
+}
+
+message StarMap
+{
+    optional StarCardInfo card_info = 1;
+    optional int32 lottery_times = 2;
+}
+
+message HeroSkinBook
+{
+    message NingCui
+    {
+        optional string ning_cui_level = 1;
+    }
+
+    optional string skin_book = 1;
+    optional int32 light_num = 2;
+    optional NingCui ning_cui = 3;
+}
+
+message Pos
+{
+    optional uint32 pos_id =1;
+    optional uint32 uin =2;
+    optional int32 data_version = 100;
+}
+
+message Landgrave
+{
+    required uint32 map_id = 1;
+    repeated Pos pos = 2;
+    optional uint32 pos_num = 3;
+}
+
+message LandCity
+{
+    optional uint32 pos = 1;
+    optional uint32 uin = 2;
+    optional uint32 use_skin = 3;
+    optional uint32 city_status = 4;
+    optional int32 city_level = 5;
+    optional string nick_name = 6;
+    optional uint32 truce_time = 7;
+    optional uint32 fac_id = 8;
+    optional uint32 fac_level = 9;
+    optional string fac_name = 10;
+}
+
+enum CityStatus
+{
+    CITY_STATUS_PEACE = 0;
+    CITY_STATUS_WAR = 1;
+    CITY_STATUS_FALL = 2;
+    CITY_STATUS_TRUCE = 3;
+}
+
+enum BuildingID
+{
+    BUILDING_BARRACKS = 2;
+    BUILDING_WALL = 3;
+    BUILDING_ARMS = 4;
+    PK_BUILDING_CITY = 11;
+    PK_BUILDING_BARRACKS = 12;
+    PK_BUILDING_WALL = 13;
+    PK_BUILDING_ARMS = 14;
+    PK_BUILDING_CAMP = 15;
+}
+
+message CityBasic
+{
+    optional uint32 map_id = 1;
+    optional uint32 pos_id = 2;
+    optional uint32 have_skin = 4;
+    optional uint32 use_skin = 5;
+    optional CityStatus city_status = 6;
+    optional uint32 truce_time = 7;
+    optional uint32 change_city_time = 11;
+    optional uint32 high_qual = 12;
+}
+
+message AddPlaceComm
+{
+    optional uint32 type = 1;
+    optional uint32 id = 2;
+    optional uint32 level = 3;
+}
+
+message CityBuilding
+{
+    enum BARRACKS_ADDITION
+    {
+        ADD_PERCENT_0 = 0;
+        ADD_PERCENT_10 = 1;
+        ADD_PERCENT_20 = 2;
+        ADD_PERCENT_30 = 3;
+        ADD_PERCENT_40 = 4;
+        ADD_PERCENT_50 = 5;
+    }
+
+    enum BARRACKS_SKILL
+    {
+        BARRACKS_SKILL_NULL = 0;
+        BARRACKS_SKILL_A = 1;
+        BARRACKS_SKILL_B = 2;
+        BARRACKS_SKILL_C = 3;
+    }
+
+    message AddPlaceCommInfo
+    {
+        repeated AddPlaceComm camp_add = 1;
+    }
+
+    optional int32 id = 1;
+    optional int32 level = 2;
+    optional int32 barracks_addition = 3;
+    optional int32 barracks_skill = 4;
+    optional int32 collect_nums = 5;
+    optional uint32 collect_recover = 6;
+    optional bytes bt_collect_add = 7;
+    optional int32 attk_army = 8;
+    optional bytes bt_camp_add = 9;
+}
+
+message CityAttkInfo
+{
+    optional uint32 last_fight_time = 1;
+    optional int32 daily_fight_times = 2;
+    optional uint32 be_drove_out_times = 3;
+    optional int32 have_fight_time = 4;
+    optional uint32 fight_time_recover =5;
+}
+
+message CityPkFacGift
+{
+    optional uint32 got_free_gift = 1;
+    optional uint32 got_pay_gift = 2;
+    optional int32 is_pay = 3;
+    optional int32 used_point = 4;
+    optional int32 per_point = 5;
+    optional int32 week_point = 6;
+}
+
+message CityPkTop3Pay
+{
+    optional uint32 is_pay = 1;
+    optional uint32 last_oper_time = 2;
+}
+
+message CityPkBuilding
+{
+    repeated CityBuilding bulidings = 1;
+}
+
+message CityPkResources
+{
+    optional int32 military_pay = 1;
+    optional int32 wood = 2;
+    optional int32 stone = 3;
+    optional int32 food = 4;
+    optional int32 soldier = 5;
+}
+
+message CityPkEvent
+{
+    optional uint32 event_end_time = 1;
+    optional bool finish_event = 2[default = false];
+}
+
+message FormationPosInfo
+{
+    optional uint32 pos_id = 1;
+    optional uint32 hero_id = 2;
+}
+
+message FormationInfo
+{
+    optional uint32 formaion_id = 1;
+    repeated FormationPosInfo formation_map = 2;
+    repeated FormationPosInfo vice_heros = 3;
+    repeated FormationPosInfo together_heros = 4;
+    optional uint32 oper_code = 30;
+}
+
+message CityPkFormationInfo
+{
+    optional uint32 default_formation = 1[default = 60000122];
+    repeated FormationInfo formation_info = 2;
+}
+
+message CityPkInfo
+{
+    optional uint32 pk_end_time = 1;
+    optional CityPkFacGift city_pk_fac_gift = 2;
+    optional CityPkFormationInfo pk_formation_info = 3;
+    optional CityPkBuilding pk_city_builds = 4;
+    optional CityPkResources pk_resources = 5;
+    optional CityPkEvent pk_event_person = 6;
+    optional int32 level = 7;
+}
+
+message City
+{
+    optional CityBasic city_basic = 1;
+    optional int32 level = 2;
+    optional int32 wall_hp = 3;
+    repeated CityBuilding bulidings = 4;
+    optional uint32 attk_time = 5;
+    optional int32 military_pay = 6;
+    optional int32 wood = 7;
+    optional int32 stone = 8;
+    optional CityAttkInfo city_attk_info = 9;
+    optional string faction_name = 10;
+    optional string nick_name = 11;
+    optional CityPkInfo city_pk_info = 12;
+    optional CityPkTop3Pay city_pk_top3_pay = 13;
+}
+
+message AltarInfo
+{
+    enum FaWeaponAttrType
+    {
+        FA_ATTR_GOLD = 1;
+        FA_ATTR_WOOD = 2;
+        FA_ATTR_SOIL = 3;
+        FA_ATTR_WATER = 4;
+        FA_ATTR_FIRE = 5;
+        FA_ATTR_YANG = 6;
+        FA_ATTR_YIN = 7;
+    }
+
+    message FaWeapon
+    {
+        optional uint32 id = 1;
+        optional uint32 exp = 2;
+        optional uint32 oper_code = 3;
+    }
+
+    repeated FaWeapon fa_weapons = 1;
+    optional uint32 level = 2;
+    optional uint32 choice = 3;
+}
+
+message LadderFactionInfo
+{
+    optional int32 point = 1;
+    optional uint32 last_fight_time = 2;
+}
+
+message RoleBasic
+{
+    enum Gender
+    {
+        G_UNKNOWN = 0;
+        G_MALE = 1;
+        G_FEMALE = 2;
+    }
+
+    optional int32 con = 1;
+    optional int32 exp = 2;
+    optional int32 level = 3;
+    optional int32 money = 4;
+    optional int32 ticket = 5;
+    optional int32 exp_pool = 6;
+    optional int32 day_hero_num = 7;
+    optional int32 max_pool_size = 10;
+    optional int32 max_pack_size = 11;
+    optional int32 max_con = 12;
+    optional int32 fighting_capacity = 13;
+    optional int32 con_recover = 14;
+    optional uint32 birthday = 15;
+    optional uint32 next_rec_time = 16;
+    optional uint32 max_fight_hero = 17;
+    optional uint32 fight_times = 20;
+    optional uint32 add_fight_times = 21;
+    repeated FlashCookie user_cookies = 22;
+    optional int32 fund = 23;
+    optional int32 day_active_exp = 24;
+    optional int32 day_passive_exp = 25;
+    optional int32 be_plunder_times = 26;
+    optional int32 fame = 27;
+    optional int32 login_platform = 28;
+    optional int32 reg_platform = 29;
+    optional int32 recharge_point = 30;
+    optional int32 recharge_time = 31;
+    optional fixed32 referer = 32;
+    optional uint32 beta_birthday = 33;
+    optional int32 rmb_ticket = 34;
+    optional uint32 frozen_time = 35;
+    optional uint32 total_rebate = 36;
+    optional bytes signin_bits = 37;
+    optional int32 consume_point = 38;
+    optional Gender gender = 39;
+    optional int32 spirit = 40;
+    optional int32 constellation = 41;
+    optional uint32 constell_cd = 42;
+    optional string motto = 43;
+    optional int32 groupon_point = 44;
+    optional int32 constell_tired = 45;
+    optional uint32 session_id = 46;
+    optional int32 physique_pool = 47;
+    optional int32 used_point = 48;
+    optional uint32 version = 49;
+    optional uint32 shutup_time = 50;
+    optional int32 fame_level = 51;
+    optional int32 passive_exp = 52;
+    optional int32 ret_ticket = 53;
+    optional int32 fight_special_effect = 54;
+    optional fixed32 gold_hero_num = 55;
+    optional int32 test_qb = 56;
+    optional uint32 have_head_border = 57;
+    optional string have_head_border_expand = 58 [default = ""];
+    optional uint32 god_hero_num = 59;
+    optional int32 city_fighting_capacity = 60;
+    optional int32 zone_id = 100;
+    optional uint32 last_login_time = 101;
+    optional uint32 last_fight_time = 102;
+    optional uint32 last_clear_time = 103;
+    optional fixed32 client_pos = 104;
+    optional uint32 last_signin_time = 105;
+    optional uint32 week_last_clear_time = 106;
+    optional uint32 consume_time = 107;
+    optional fixed32 last_monthly_clear_time = 108;
+    optional uint32 logout_time =109;
+}
+
+message Vip
+{
+    optional int32 type = 1;
+    optional int32 level = 2;
+    optional int32 annual = 3;
+    optional int32 deluxe = 4;
+}
+
+message UserQQInfo
+{
+    optional string qq_nick = 1;
+    optional string head_url = 2;
+    repeated Vip vip = 3;
+    optional uint32 head_board = 4;
+}
+
+message GlobalBuff
+{
+    optional int32 id = 1;
+    optional int32 item_id = 2;
+    optional int32 type = 3;
+    optional int32 times_left = 4;
+    optional uint32 expiry_date = 5;
+    optional string buff_desc = 6;
+    optional int32 uesed_times = 7;
+    optional bool is_show = 8;
+    optional uint32 begin_time = 9;
+    optional uint32 gift_flag = 10;
+    optional int32 oper_code = 50;
+}
+
+message RoleMine
+{
+    optional uint32 occupy_area_id = 1;
+    optional uint32 occupy_mine_id = 2;
+    optional uint32 daily_snatch_count = 3;
+    optional uint32 daily_pilfer_count = 5;
+    optional uint32 daily_occupy_count = 6;
+    optional uint32 harvest_time = 7;
+    optional uint32 daily_buy_snatch_count = 8;
+}
+
+message CdInfo
+{
+    enum CdType
+    {
+        CD_TYPE_FIGHT = 1;
+        CD_TYPE_COLLECT = 2;
+        CD_TYPE_SMITHY = 3;
+        CD_TYPE_HERO_MARKET = 4;
+        CD_TYPE_FUN_SHOP = 5;
+        CD_TYPE_ACCREDIT = 6;
+        CD_TYPE_FIGHT_RANK = 7;
+        CD_TYPE_FREE_REFRESH = 8;
+        CD_TYPE_PLUNDER = 9;
+    }
+
+    enum MaxCdTime
+    {
+        MAX_CD_TIME_FIGHT = 600;
+        MAX_CD_TIME_COLLECT = 1800;
+        MAX_CD_TIME_SMITHY = 1801;
+        MAX_CD_TIME_HERO_MARKET = 86400;
+        MAX_CD_TIME_FUND_SHOP = 14400;
+        MAX_CD_TIME_ACCREDIT = 7200;
+        MAX_CD_TIME_FIGHT_RANK = 300;
+        MAX_CD_TIME_FREE_REFRESH = 601;
+    }
+
+    optional uint32 id = 1;
+    optional uint32 cd_time = 2;
+    optional uint32 clear_times = 3;
+    optional uint32 max_cd_time = 4;
+    optional int32 tired = 5;
+    optional int32 oper_code = 20;
+}
+
+message TimesInfo
+{
+    enum TimesType
+    {
+        TIMES_TYPE_FIGHT = 1;
+        TIMES_TYPE_COLLECT = 2;
+        TIMES_TYPE_GET_HERO = 3;
+        TIMES_TYPE_SNATCH_HERO = 4;
+        TIMES_TYPE_ACCELER_HERO = 5;
+        TIMES_TYPE_ACTIVITY = 6;
+        TIMES_TYPE_COMMENT = 7;
+        TIMES_TYPE_ACCELER_TICKET = 8;
+        TIMES_TYPE_ENHANCE_WEAPON = 9;
+        TIMES_TYPE_FUND_ACTIVITY = 10;
+        TIMES_TYPE_EXCERISE = 11;
+        TIMES_TYPE_EXCERISE2 = 12;
+        TIMES_TYPE_EXCERISE3 = 13;
+        TIMES_TYPE_EXCERISE4 = 14;
+        TIMES_TYPE_PLUNDER_CON = 15;
+        TIMES_TYPE_MYSTICAL_CON = 16;
+        TIMES_TYPE_FIVEELEMENTSMAKE = 17;
+        TIMES_TYPE_CITY_LIAN_BING = 18;
+    }
+
+    enum RecoverType
+    {
+        RECOVER_PER_DAY = 1;
+        RECOVER_PER_HOUR = 2;
+    }
+
+    optional uint32 id = 1;
+    optional int32 times = 2;
+    optional uint32 use_times = 3;
+    optional uint32 max_times = 4;
+    optional uint32 buy_times = 5;
+    optional uint32 recover = 6;
+    optional uint32 recover_type = 7;
+    optional int32 oper_code = 20;
+}
+
+message TaskAtomInfo
+{
+    optional uint32 idx = 1;
+    optional uint32 progress = 2;
+    optional uint32 max_progress = 3;
+    optional TaskStatus status = 4;
+    optional string desc = 5;
+}
+
+
+
+message TaskInfo
+{
+    optional uint32 id = 1;
+    optional uint32 timestamp = 2;
+    optional TaskStatus status = 3;
+    repeated TaskAtomInfo atoms = 4;
+    optional uint32 star = 5;
+    optional uint32 npc = 6;
+    optional string name = 7;
+    optional string desc = 8;
+    optional string award = 9;
+}
+
+enum TaskStatus
+{
+    TaskStatus_None = 0;
+    TaskStatus_InProcess = 1;
+    TaskStatus_Finished = 2;
+    TaskStatus_Closed = 3;
+}
+
+message FactionTasks
+{
+    optional int32 star = 1;
+    optional fixed32 timestamp = 2;
+    repeated TaskArchive tasks = 3;
+}
+
+message FactionBuild
+{
+    enum FacBuildID
+    {
+        FACBUILD_ID_TECH_TOWER = 1;
+        FACBUILD_ID_GUANGGONG = 2;
+        FACBUILD_ID_WISH_TREE = 3;
+    }
+
+    optional uint32 id = 1;
+    optional int32 level = 2;
+    optional int32 building = 3;
+    optional uint32 level_up_time = 4;
+}
+
+message FacSkillConcise
+{
+    optional uint32 type = 1;
+    optional uint32 concise_level = 2;
+    optional uint32 bless_point = 3;
+    optional uint32 oper_code = 20;
+}
+
+message Faction
+{
+    optional uint32 fac_id = 1;
+    optional FactionPosition position = 2;
+    repeated ApplyedInfo applyed_facs = 3;
+    optional uint32 fac_con = 6;
+    optional uint32 jion_time = 7;
+    optional FactionTasks fac_tasks = 8;
+    repeated fixed32 fac_skill_id = 9 [packed = true];
+    optional int32 fac_wealth = 10;
+    optional uint32 fac_level = 11;
+    optional string fac_name = 12;
+    optional uint32 wish_tree = 13;
+    repeated uint32 dalliance_prison = 14;
+    repeated FacSkillConcise fac_skill_concise = 15;
+    optional fixed32 quit_time = 16;
+}
+
+enum FactionPosition
+{
+    POSITION_NONE = 0;
+    POSITION_MASSES = 1;
+    POSITION_ELDER = 70;
+    POSITION_GUARDIAN = 80;
+    POSITION_ASSIS_OWNER = 90;
+    POSITION_OWNER = 100;
+}
+
+message ApplyedInfo
+{
+    optional uint32 applyed_fac_id = 1;
+    optional uint32 applyed_time = 2;
+    optional uint32 oper_code = 20;
+}
+
+message TaskAtomArchive
+{
+    optional uint32 idx = 1;
+    optional int32 progress = 2;
+    optional TaskStatus status = 3 [default = TaskStatus_InProcess];
+}
+
+message TaskArchive
+{
+    required fixed32 id = 1;
+    optional fixed32 timestamp = 2;
+    repeated TaskAtomArchive atoms = 3;
+    optional TaskStatus status = 4 [default = TaskStatus_InProcess];
+    optional fixed32 star = 5;
+    optional ChangeOperCode oper_code = 32;
+}
+
+enum ChangeOperCode
+{
+    OPER_ADD = 1;
+    OPER_SUB = 2;
+    OPER_ALT = 3;
+    OPER_RST = 4;
+    OPER_ALT_ADD = 5;
+    OPER_CLR = 6;
+    OPER_CLN = 7;
+}
+
+enum LoginScene
+{
+    LOGIN_SCENE_HOMELAND = 0;
+    LOGIN_SCENE_MAP = 1;
+}
+
+message LockInfo
+{
+    enum LockFlags
+    {
+        LF_DELETE_HERO = 1;
+        LF_INHERIT_HERO = 2;
+        LF_SELL_WEAPON = 4;
+        LF_QUIT_FACTION = 8;
+        LF_TRANSFER_FACTION = 16;
+        LF_DISMISS_FACTION = 32;
+        LF_SWORN_OPPOINT = 64;
+        LF_COUNTRY_OPER = 128;
+        LF_VIP_SHOW_MASK = 256;
+        LF_TRADE_OPER = 512;
+    }
+
+    optional uint32 flags = 1;
+    optional uint32 expire_time = 2;
+    optional string passwd = 3;
+    optional uint32 daily_retry_count = 4;
+    optional bool is_passwd_set = 100;
+}
+
+message FortInfo
+{
+    optional fixed32 fortress_id = 1;
+    optional int32 honor_value = 2;
+    optional fixed32 honor_expire_time = 3;
+    optional uint32 boon_used_flag = 4;
+    optional int32 revive_times = 5;
+    optional fixed32 last_fight_invader_time = 6;
+}
+
+message OfflineData
+{
+    optional int32 user_level = 1;
+    repeated Item items = 2;
+}
+
+message Item
+{
+    optional int32 id = 1;
+    optional int32 type = 2;
+    optional uint32 expiry_date = 3;
+    optional int32 num = 4;
+    optional int32 max_num = 5;
+    optional uint32 clear_time = 6;
+}
+
+message Pack
+{
+    repeated Item items = 1;
+    repeated Weapon weapons = 2;
+    optional int32 level_gift = 3;
+    repeated UsedItem used_item = 4;
+    repeated int32 gain_gift = 5;
+    repeated fixed32 common_gifts_flag = 6;
+    optional int32 weapon_num = 7;
+    repeated Stone stones = 8;
+    repeated Item future_items = 9;
+    repeated Soul souls = 10;
+    repeated Phylactery phylacteries = 11;
+    repeated Item treasure_mix_limit = 12;
+    repeated Item treasure_mix_day_limit = 13;
+    optional int32 phylactery_num = 14;
+    repeated BingPo bingpos = 15;
+    repeated Decoration decorations = 16;
+    optional int32 decoration_num = 17;
+    optional uint32 update_gift_period = 18;
+    optional uint32 update_gift_flag = 19;
+    repeated Boots boots = 20;
+    optional int32 boots_num = 21;
+    optional uint32 update_gift_2_period = 22;
+    optional uint32 update_gift_2_flag = 23;
+}
+
+message Weapon
+{
+    required uint32 id = 1;
+    optional WeaponBasic weapon_basic = 2;
+    optional FightAttr attr_addition = 3;
+    optional FightAttr next_lv_addition = 4;
+    optional fixed32 expend = 5;
+    optional fixed32 holder_id = 6;
+    optional fixed32 max_chip_num = 7;
+    repeated int32 stones = 8;
+    optional fixed32 enhance_value = 9;
+    optional WeaponSurmount surmount = 10;
+    optional KunWu kun_wu = 12;
+    optional fixed32 oper_code = 50;
+}
+
+message WeaponBasic
+{
+    optional uint32 figure = 1;
+    optional int32 level = 2;
+    optional int32 chip_num = 3;
+    optional int32 price = 4;
+    optional int32 slot_num = 5;
+}
+
+message FightAttr
+{
+    enum AttrType
+    {
+        HP = 1;
+        AP = 2;
+        DEF = 3;
+        MAG = 4;
+        MND = 5;
+        SP = 6;
+        HIT = 7;
+        CRI = 8;
+        DOD = 9;
+        ARMOR = 11;
+        PASS = 12;
+    }
+
+    optional int32 hp = 1;
+    optional int32 ap = 2;
+    optional int32 mag = 3;
+    optional int32 def = 4;
+    optional int32 mnd = 5;
+    optional int32 sp = 6;
+
+    optional int32 hit = 7;
+    optional int32 dod = 8;
+    optional int32 cri = 9;
+    optional int32 cur_hp = 10;
+    optional int32 armor = 11;
+    optional int32 pass = 12;
+}
+
+
+message WeaponSurmount
+{
+    enum SurmountPropertyType
+    {
+        SURMOUNT_PROPERTY_FREEZE   = 0;
+        SURMOUNT_PROPERTY_SLOW    = 1;
+        SURMOUNT_PROPERTY_SEAL   = 2;
+        SURMOUNT_PROPERTY_SEDUCE = 3;
+        SURMOUNT_PROPERTY_REDUCE_CRI = 4;
+        SURMOUNT_PROPERTY_VERTIGO = 5;
+        SURMOUNT_PROPERTY_TIAN_DU = 6;
+        SURMOUNT_PROPERTY_TIAN_FENG = 7;
+        SURMOUNT_PROPERTY_TIAN_XUAN = 8;
+        SURMOUNT_PROPERTY_TIAN_MA = 9;
+    }
+
+    optional uint32 surmount_value = 1;
+    optional bytes surmount_bitset = 2;
+    repeated SurmountPropertyType surmount_bitset_client = 3;
+    repeated SurmountPropertyType incr_bit = 4;
+    repeated SurmountPropertyType decr_bit = 5;
+}
+
+message KunWuAttr
+{
+    optional uint32 attr_id = 1;
+    optional uint32 attr_level = 2;
+    optional uint32 attr_num = 3;
+    optional uint32 random_times = 4;
+
+}
+
+message TempKunWuAttr
+{
+    optional uint32 attr_id = 1;
+    optional uint32 attr_level = 2;
+    optional uint32 attr_num = 3;
+    optional int32 oper = 4;
+}
+
+message KunWu
+{
+    optional int32 star_level = 1;
+    repeated KunWuAttr kunwu_attr_info = 2;
+    optional TempKunWuAttr temp_kun_wu_attr = 3;
+}
+
+message UsedItem
+{
+    optional uint32 id = 1;
+    optional uint32 count = 2;
+
+    optional uint32 oper_code = 20;
+}
+
+message Stone
+{
+    optional uint32 id = 1;
+    optional int32 num = 2;
+}
+
+message Soul
+{
+    optional uint32 id = 1;
+    optional uint32 exp = 2;
+    optional uint32 level = 3;
+    optional bool   lock = 4;
+    optional uint32 pos = 5;
+    optional uint32 log_id = 6;
+    optional uint32 concise_level = 7;
+    optional uint32 bless_point = 8;
+    optional ChangeOperCode oper_code = 50;
+}
+
+message Phylactery
+{
+    enum ConstDef
+    {
+        MAX_BURNISH_TIMES = 10;
+    }
+    optional uint32 id = 1;
+    optional uint32 burnish_times = 2;
+    optional float addition_1 = 3;
+    repeated int32 addition_2 = 4;
+
+    optional float soma = 5;
+    optional float force = 6;
+    optional float mind = 7;
+    optional float agile = 8;
+
+    optional uint32 holder = 9;
+    optional uint32 lock = 10;
+    optional bool  bind = 11;
+
+    message TrainInfo
+    {
+        optional uint32 soma  = 1;
+        optional uint32 force = 2;
+        optional uint32 mind  = 3;
+        optional uint32 agile = 4;
+        optional uint32 train_exp = 5;
+        optional uint32 level_up = 6;
+    }
+
+    optional TrainInfo train_info = 12;
+
+    optional uint32 oper_code = 20;
+}
+
+message BingPo
+{
+    optional uint32 figure = 1;
+    optional uint32 fixed_attr = 2;
+    repeated uint32 random_attr = 3[packed = true];
+    optional uint32 pos = 4;
+    optional int32 oper_code = 5;
+    optional uint32 enhance_cost = 6;
+}
+
+message Decoration
+{
+    optional uint32 id = 1;
+    optional uint32 figure = 2;
+    optional int32 exp = 3;
+    optional int32 hp_percent = 4;
+    optional int32 ap_percent = 5;
+    optional int32 def_percent = 6;
+    optional int32 mag_percent = 7;
+    optional int32 mnd_percent = 8;
+    optional uint32 holder_id = 9;
+    optional uint32 level_up = 10;
+
+    optional uint32 oper_code = 20;
+}
+
+message BootsSkill
+{
+    optional uint32 skill_type = 1;
+    optional uint32 exp = 2;
+    optional uint32 oper_code = 3;
+}
+
+message Boots
+{
+    optional uint32 id = 1;
+    optional uint32 figure = 2;
+    optional uint32 exp = 3;
+    repeated BootsSkill boots_skills = 4;
+    optional uint32 holder_id = 5;
+
+    optional uint32 oper_code = 10;
+}
+
+message FlashCookie
+{
+    optional uint32 key = 1;
+    optional string data = 2;
+}
+
+message RoundRobinInfo
+{
+    optional uint32 sign_up_time = 1;
+    optional uint32 gift_flag = 2;
+    optional int32 round_robin_box = 3;
+    optional int32 round_robin_token = 4;
+}
+
+message GrowUpGuardInfo
+{
+    optional uint32 type = 1;
+    optional uint32 start_time = 2;
+    optional uint32 end_time = 3;
+}
+
+message JudgeLoginRspInfo
+{
+    required int32 ret            = 1;
+    optional string msg           = 2;
+    required string trace_id       = 3;
+    optional string context       = 4;
+    repeated Instruction instructions = 5;
+}
+
+message Instruction
+{
+    required uint32 type          = 1;
+    optional string title         = 2;
+    optional string msg           = 3;
+    optional string url           = 4;
+    optional uint32 modal         = 5;
+    optional string data          = 6;
+    required string rule_name     = 7;
+}
+
+
+message ClientHero
+{
+    enum AttrStatus{
+        COMMON = 0;
+        FULLSTAR = 1;
+        FULLATTR = 2;
+    }
+    optional uint32 id = 1;
+    optional uint32 figure = 2;
+    optional HeroBasic hero_basic = 3;
+    optional GiftAttr gift_attr = 4;
+    optional GiftAttr wash_attr = 5;
+    repeated Skill skills = 7;
+    repeated Weapon weapons = 8;
+
+    optional uint32 state = 9;
+    optional uint32 value = 10;
+    optional uint32 strength  = 11;
+
+    optional GiftAttr gain_attr = 12;
+    repeated Soul  souls = 13;
+
+    optional FightAttr fight_attr = 14;
+    optional ResisAttr resis_attr = 15;
+
+    optional int32  suit_effect = 16;
+    repeated CSkill combo_skills = 17;
+    optional string character_name = 18;
+    optional string character_dsc =19;
+    repeated string skill_dsc     = 20;
+    optional string hero_dsc =21;
+    repeated Phylactery phylacteries = 22;
+    optional AttrStatus attr_status = 23;
+    repeated Decoration decorations = 24;
+    repeated Boots boots = 25;
+    optional HeroSkin hero_skin = 26;
+    optional uint32 oper_code = 30;
+}
+
+message HeroBasic
+{
+    enum InheritState
+    {
+        IS_NOOP = 0;
+        IS_INHERITED_TO = 1;
+        IS_INHERITED_FROM = 2;
+        IS_INHERITED_TO_FROM = 3;
+    }
+    enum InheritFlags
+    {
+        IF_INHERIT_TO = 1;
+        IF_INHERIT_FROM = 2;
+    }
+
+    enum RtBoneState{
+        IS_RETURN_NOOP = 0;
+        IS_RETURN_TO = 1;
+        IS_RETURN_FROM = 2;
+        IS_RETURN_TO_FROM = 3;
+    }
+
+    enum RtBoneFlags{
+        RTF_RETURN_TO = 1;
+        RTF_RETURN_FROM = 2;
+    }
+    enum AttrType
+    {
+        AT_UNKNOWN = 0;
+        AT_SOMA = 1;
+        AT_FORCE = 2;
+        AT_MIND = 3;
+        AT_AGILE = 4;
+    }
+    enum LockState
+    {
+        LS_FREE = 0;
+        LS_LOCK = -1;
+    }
+    enum WhereFrom
+    {
+        WF_UNKNOWN = 0;
+        WF_RECRUIT_FROM_HERO_MARKET = 1;
+        WF_GIFT = 2;
+        WF_RECRUIT_FROM_MAP = 3;
+    }
+    optional int32 exp        = 1;
+    optional int32 level      = 2;
+    optional int32 training   = 3;
+    optional int32 character  = 4;
+    optional int32 career     = 5;
+    optional int32 star       = 6;
+    optional int32 max_star   = 7;
+
+    optional InheritState inherit_state = 8;
+    optional int32 root_bone = 9;
+    optional uint32 lock = 10;
+    optional int32 physique = 11;
+    optional uint32 clean_inherit_times = 12;
+    optional int32 tryout_addition = 13;
+    optional RtBoneState rt_bone_state = 14;
+    optional uint32 skill_level = 15;
+    optional uint32 gift_upgrade = 16;
+    optional string skill_list_a = 17;
+    optional uint32 remainder_god_point = 18;
+    optional uint32 chose_skill = 19;
+    optional string skill_list_b = 20;
+    optional string skill_list_c = 21;
+    optional uint32 lv_god_skill_rebuild = 22;
+}
+
+message GiftAttr
+{
+    optional int32 soma  = 1;
+    optional int32 force = 2;
+    optional int32 mind  = 3;
+    optional int32 agile = 4;
+
+    optional int32 hit = 7;
+    optional int32 dod = 8;
+    optional int32 cri = 9;
+
+    optional int32 oper_code = 20;
+}
+
+message Skill
+{
+    optional uint32 id = 1;
+    optional uint32 oper_code = 20;
+}
+
+message ResisAttr
+{
+    optional int32 reduce_perc_cri = 7;
+    optional int32 reduce_perc_damage = 8;
+    optional int32 reduce_cri = 9;
+    optional int32 reduce_damage = 10;
+    optional int32 freeze = 12;
+    optional int32 vertigo = 13;
+    optional int32 seal = 14;
+    optional int32 chaos = 15;
+    optional int32 slow = 16;
+    optional int32 seal_general = 17;
+    optional int32 paralysis = 18;
+    optional int32 poisoning = 19;
+    optional int32 seduce = 20;
+
+    message Attr{
+        optional int32 id  = 1;
+        optional int32 val = 2;
+    }
+
+    repeated Attr attr  = 100;
+}
+
+message CSkill
+{
+    optional uint32 id = 1;
+    optional uint32 status = 2;
+    optional uint32 oper_code = 20;
+}
+
+message HeroSkin
+{
+    optional bytes skin_have_bitset = 1;
+    optional uint32 used_skin_idx = 2;
+    repeated uint32 incr_skin_idxs = 3;
+    repeated uint32 decr_skin_idxs = 4;
+}
+
+message TrainHero
+{
+    optional int32 seat_id = 1;
+    optional uint32 hero_owner_uin = 2;
+    optional uint32 ground_owner_uin = 3;
+    optional int32 hero_id = 4;
+    optional uint32 begin_time = 5;
+    optional uint32 ground_level = 6;
+    optional uint32 hero_owner_lv = 7;
+    optional uint32 exp_type = 8;
+    optional uint32 figure = 9;
+    optional string ground_owner = 10;
+    optional string hero_owner = 11;
+    optional uint32 end_time = 12;
+    optional uint32 advanced_mode = 13;
+    optional uint32 sworn_addtion = 14;
+
+    optional int32 oper_code = 20;
+}
+
+message MapRequireDesc
+{
+    optional string require_desc = 1;
+    optional bool   is_satisfied = 2;
+}
+
+message Map1Info
+{
+    optional uint32 map_id        = 1;
+    optional bool is_openable     = 2;
+    repeated MapRequireDesc open_requires = 3;
+    repeated string awards        = 4;
+    optional uint32 is_all_clear    = 5;
+    optional fixed32 open_time    = 6;
+    optional fixed32 close_time   = 7;
+}
+
+message Map2Info
+{
+    optional uint32 map_id           = 1;
+    optional bool is_openable        = 2;
+    repeated MapRequireDesc open_requires    = 3;
+    repeated string awards           = 4;
+    optional string difficulty_level = 5;
+    optional uint32 is_all_clear     = 7;
+    optional bool is_gift_available = 8;
+    optional fixed32 animate_id      = 9;
+}
+
+message Map3Info
+{
+    optional uint32 map_id          = 1;
+    optional bool is_openable       = 2;
+    optional uint32 npc_level       = 3;
+    optional uint32 can_fight_times = 4;
+
+    repeated uint32 awards_weapon   = 5;
+
+    optional uint32 npc_type        = 6;
+    optional bool is_conquered      = 7;
+    optional uint32 conquered_times = 8;
+
+    optional uint32 awards_fund     = 9;
+    optional uint32 boss_born_date_time  = 10;
+    optional uint32 boss_life_time  = 11;
+    optional uint32 boss_born_timestamp = 12;
+    optional uint32 recruit_require_type = 13;
+    repeated uint32 recruit_require_param = 14;
+    optional uint32 figure = 15;
+    optional uint32 conquered_times_all = 16;
+    optional uint32 recruit_hero_id = 17;
+    optional bool recruitable = 18;
+    optional bool has_challenged = 19;
+    optional string drop_desc = 20;
+    optional int32 drop_weapon_type = 21;
+}
+
+message SelfTrainHero
+{
+    optional uint32 seat_id = 1;
+    optional uint32 hero_id = 2;
+    optional uint32 figure = 3;
+    optional uint32 hero_owner_lv = 4;
+    optional uint32 exp_type = 5;
+    optional uint32 ground_level = 6;
+    optional uint32 advanced_mode = 7;
+    optional uint32 begin_time = 8;
+    optional uint32 end_time = 9;
+
+    optional int32 oper_code = 20;
+}
+
+message RoleExtraSync
+{
+    optional int32 fac_con = 1;
+}
+
+message Farm
+{
+    message Crop
+    {
+        enum Status
+        {
+            CROP_STATUS_GROWING = 0;
+            CROP_STATUS_WEED    = 1;
+            CROP_STATUS_PEST    = 2;
+            CROP_STATUS_MATURE  = 3;
+            CROP_STATUS_DEATH   = 4;
+            CROP_STATUS_EMPTY   = 5;
+        }
+        enum OutputType
+        {
+            OT_ROLE_EXP = 1;
+            OT_HERO_EXP = 2;
+            OT_GOLD     = 3;
+            OT_FUND     = 4;
+            OT_ITEM     = 6;
+        }
+
+        optional uint32 id = 1;
+        optional int32 output = 2;
+        optional uint32 harvest_time = 3;
+        optional uint32 status_time = 4;
+        optional Status status = 5;
+        repeated uint32 pilfers = 6[packed=true];
+        optional uint32 pilfer_times = 7;
+    }
+
+    message Field
+    {
+        optional uint32 id = 1;
+        optional Crop crop = 2;
+    }
+
+    message Seed
+    {
+        optional uint32 id = 1;
+        optional int32 num = 2;
+    }
+
+    message Tree
+    {
+        optional uint32 id = 1;
+        optional uint32 total_water_times = 2;
+        optional fixed32 own_next_water_time = 3;
+        optional bool got_daily_gift = 4;
+        optional uint32 daily_own_water_times = 5;
+    }
+
+    optional int32 exp = 1;
+    optional int32 level = 2;
+    repeated Seed seeds = 3;
+    repeated Field fields = 4;
+    optional Tree tree = 5;
+    optional uint32 daily_pilfer_times = 6;
+    optional int32 daily_farm_exp = 7;
+    repeated fixed32 daily_i_pilfer_friends = 8[packed=true];
+    repeated fixed32 daily_i_water_friends = 9[packed=true];
+    optional int32 daily_friend_farm_exp = 10;
+    optional uint32 daily_ling_cao_times = 11;
+    optional uint32 daily_ling_mu_times = 12;
+}
+
+message FlashPerDayData
+{
+    optional int32 gold_gain = 2;
+    optional int32 fund_gain = 3;
+    repeated GuardEnemy guard_enemies = 4;
+    optional bool is_homeland_fire = 5;
+}
+
+message GuardEnemy
+{
+    optional uint32 uin = 1;
+    optional string nick = 2;
+    optional uint32 oper_code = 3;
+}
+
+message FitInfo
+{
+    optional int32 sumo_times = 1;
+    optional int32 round = 2;
+    optional int32 step = 3;
+    optional int32 bonus_times = 4 [default = 1];
+    optional int32 init_character = 5;
+    optional int32 strategy = 6;
+    optional uint32 last_sumo_modified = 7;
+}
+
+message SyncData
+{
+    optional int32 id = 1;
+    optional int32 code = 2;
+}
+
+message SkinInfo
+{
+    optional uint32 cur_skin_id = 1;
+    optional bytes skin_bitset = 2;
+    repeated Skin skins = 3;
+    repeated uint32 incr_skins = 4;
+    repeated uint32 decr_skins = 5;
+    optional int32 oper_code = 10;
+}
+
+message Skin
+{
+    optional uint32 id = 1;
+    optional uint32 expire_time = 2;
+
+    optional uint32 oper_code = 20;
+}
+
+message CountryBattleInfo
+{
+    optional int32 battle_point = 1;
+    optional uint32 assist_times = 2;
+    optional uint32 daily_worship_times = 3;
+    optional uint32 assess_gift_flag = 4;
+    optional uint32 kingdom_gift_flag = 5;
+    optional int32 day_battle_point = 6;
+    optional uint32 daily_inspire_times = 7;
+    optional uint32 daily_survive_times = 8;
+
+    optional int32 daily_melee_join_times = 9;
+    optional uint32 daily_melee_inspire_times = 10;
+    optional uint32 daily_melee_survive_times = 11;
+}
+
+message MilitaryAdviser
+{
+    message Skill
+    {
+        optional uint32 type = 1;
+        optional uint32 level = 2;
+        optional bool is_used = 3;
+        optional uint32 oper_code = 4;
+    }
+
+    message Attr
+    {
+        optional uint32 id = 1;
+        optional uint32 exp = 2;
+        optional uint32 oper_code = 3;
+    }
+
+    repeated Attr attrs = 1;
+    repeated Skill skills = 2;
+}
