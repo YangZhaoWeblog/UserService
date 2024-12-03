@@ -1,4 +1,4 @@
-module qqShuiHu
+module JoeTiktok
 
 go 1.23.0
 

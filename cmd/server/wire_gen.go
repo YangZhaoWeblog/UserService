@@ -7,13 +7,13 @@
 package main
 
 import (
+	"JoeTiktok/internal/user/biz"
+	"JoeTiktok/internal/user/conf"
+	"JoeTiktok/internal/user/data"
+	"JoeTiktok/internal/user/server"
+	"JoeTiktok/internal/user/service"
+	"JoeTiktok/pkg/log"
 	"github.com/go-kratos/kratos/v2"
-	"qqShuiHu/internal/log"
-	"qqShuiHu/internal/user/biz"
-	"qqShuiHu/internal/user/conf"
-	data2 "qqShuiHu/internal/user/data"
-	server2 "qqShuiHu/internal/user/server"
-	"qqShuiHu/internal/user/service"
 )
 
 import (
@@ -25,15 +25,15 @@ import (
 // wireApp init kratos application.
 func wireApp(confServer *conf.Server, confData *conf.Data, confLog *conf.Log) (*kratos.App, func(), error) {
 	logger := log.NewLogger(confLog)
-	dataData, cleanup, err := data2.NewData(confData, logger)
+	dataData, cleanup, err := data.NewData(confData, logger)
 	if err != nil {
 		return nil, nil, err
 	}
-	greeterRepo := data2.NewGreeterRepo(dataData, logger)
+	greeterRepo := data.NewGreeterRepo(dataData, logger)
 	greeterUsecase := biz.NewGreeterUsecase(greeterRepo, logger)
 	greeterService := service.NewGreeterService(greeterUsecase)
-	grpcServer := server2.NewGRPCServer(confServer, greeterService, logger)
-	httpServer := server2.NewHTTPServer(confServer, greeterService, logger)
+	grpcServer := server.NewGRPCServer(confServer, greeterService, logger)
+	httpServer := server.NewHTTPServer(confServer, greeterService, logger)
 	app := newApp(logger, grpcServer, httpServer)
 	return app, func() {
 		cleanup()

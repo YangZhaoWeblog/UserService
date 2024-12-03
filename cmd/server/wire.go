@@ -6,12 +6,12 @@
 package main
 
 import (
-	diy_log "qqShuiHu/internal/log"
-	"qqShuiHu/internal/user/biz"
-	"qqShuiHu/internal/user/conf"
-	"qqShuiHu/internal/user/data"
-	"qqShuiHu/internal/user/server"
-	"qqShuiHu/internal/user/service"
+	"JoeTiktok/internal/user/biz"
+	"JoeTiktok/internal/user/conf"
+	"JoeTiktok/internal/user/data"
+	"JoeTiktok/internal/user/server"
+	"JoeTiktok/internal/user/service"
+	diy_log "JoeTiktok/pkg/log"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/google/wire"

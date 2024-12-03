@@ -1,10 +1,10 @@
 package main
 
 import (
+	"JoeTiktok/internal/user/conf"
 	"flag"
 	"os"
 	"path/filepath"
-	"qqShuiHu/internal/user/conf"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/config"
@@ -33,7 +33,7 @@ func init() {
 	if configMode == "" {
 		os.Exit(1)
 	}
-	configPath = filepath.Join("configs", configMode+".config.yaml")
+	configPath = filepath.Join("configs", configMode+".user.config.yaml")
 }
 
 func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server) *kratos.App {

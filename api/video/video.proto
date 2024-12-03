@@ -3,7 +3,7 @@ package video.v1;
 
 import "google/api/annotations.proto";
 
-option go_package = "qqShuiHu/api/video/v1;v1";
+option go_package = "JoeTiktok/api/video/v1;v1";
 option java_multiple_files = true;
 option java_package = "dev.kratos.api.video.v1";
 option java_outer_classname = "videoProtoV1";

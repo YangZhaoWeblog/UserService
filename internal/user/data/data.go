@@ -1,9 +1,9 @@
 package data
 
 import (
+	"JoeTiktok/internal/user/conf"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
-	"qqShuiHu/internal/user/conf"
 )
 
 // ProviderSet is data providers.

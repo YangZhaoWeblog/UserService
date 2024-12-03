@@ -1,9 +1,9 @@
 package server
 
 import (
+	"JoeTiktok/internal/user/conf"
+	"JoeTiktok/internal/user/service"
 	v1 "github.com/go-kratos/kratos-layout/api/helloworld/v1"
-	"qqShuiHu/internal/user/conf"
-	"qqShuiHu/internal/user/service"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
