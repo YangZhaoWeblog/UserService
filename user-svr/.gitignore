@@ -34,7 +34,7 @@ bin/
 
 # Develop tools
 .vscode/
-.idea/
+../.idea/
 *.swp
 
 *.pb.go
