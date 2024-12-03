@@ -40,6 +40,7 @@ bin/
 *.pb.go
 *.pb.validate.go
 configs/*.config.yaml
+configs/config.yaml
 internal/user/data/ent
 !internal/user/data/ent/schema
 !internal/user/data/ent/generate.go
