@@ -1,4 +1,4 @@
-module user-svr
+module github.com/YangZhaoWeblog/UserService
 
 go 1.23
 
