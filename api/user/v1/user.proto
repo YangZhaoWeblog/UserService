@@ -1,0 +1,169 @@
+syntax = "proto3";
+package user.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "validate/validate.proto";
+import "openapi/v3/annotations.proto";
+
+option go_package = "userTiktokUser/api/user/v1;v1";
+option java_multiple_files = true;
+option java_package = "dev.kratos.api.user.v1";
+option java_outer_classname = "userProtoV1";
+
+service User {
+  rpc Register (RegisterRequest) returns (RegisterReply) {
+    option (google.api.http) = {
+      post: "/user/register"
+      body: "*"
+    };
+  }
+
+  rpc Login (LoginRequest) returns (LoginReply) {
+    option (google.api.http) = {
+      post: "/user/login"
+      body: "*"
+    };
+  }
+
+  rpc Info (InfoRequest) returns (InfoReply) {
+    option (google.api.http) = {
+      get: "/user/info"
+    };
+  }
+}
+
+// 注册请求
+message RegisterRequest {
+  option (openapi.v3.schema) = {
+    required: ["auth_type"];
+  };
+
+  oneof auth_type {
+    PhoneRegister phone = 1 [(openapi.v3.property) = {title:"手机号注册信息"}];
+    GoogleRegister google = 2 [(openapi.v3.property) = {title:"谷歌账号注册信息"}];
+  }
+
+  string nickname = 3 [(openapi.v3.property) = {title:"用户昵称"}];
+  string avatar_url = 4 [(openapi.v3.property) = {title:"用户头像URL"}];
+}
+
+message PhoneRegister {
+  option (openapi.v3.schema) = {
+    required: ["phone_number", "verification_code", "password"];
+  };
+
+  string phone_number = 1 [(openapi.v3.property) = {title:"手机号码"}];
+  string verification_code = 2 [(openapi.v3.property) = {title:"短信验证码"}];
+  string password = 3 [(openapi.v3.property) = {title:"用户密码"}];
+}
+
+message GoogleRegister {
+  option (openapi.v3.schema) = {
+    required: ["id_token"];
+  };
+
+  string id_token = 1 [(openapi.v3.property) = {title:"谷歌认证Token"}];
+}
+
+// 注册响应
+message RegisterReply {
+  option (openapi.v3.schema) = {
+    required: ["success", "message"];
+  };
+
+  bool success = 1 [(openapi.v3.property) = {title:"是否成功"}];
+  string message = 2 [(openapi.v3.property) = {title:"提示信息"}];
+  UserInfo user_info = 3 [(openapi.v3.property) = {title:"用户信息"}];
+  AuthToken auth_token = 4 [(openapi.v3.property) = {title:"认证令牌"}];
+}
+
+// 登录请求
+message LoginRequest {
+  option (openapi.v3.schema) = {
+    required: ["auth_type"];
+  };
+
+  oneof auth_type {
+    PhoneLogin phone = 1 [(openapi.v3.property) = {title:"手机号登录信息"}];
+    GoogleLogin google = 2 [(openapi.v3.property) = {title:"谷歌账号登录信息"}];
+  }
+  string device_id = 3 [(openapi.v3.property) = {title:"设备标识"}];
+}
+
+message PhoneLogin {
+  option (openapi.v3.schema) = {
+    required: ["phone_number"];
+  };
+
+  string phone_number = 1 [(openapi.v3.property) = {title:"手机号码"}];
+  oneof verification {
+    string password = 2 [(openapi.v3.property) = {title:"密码"}];
+    string verification_code = 3 [(openapi.v3.property) = {title:"验证码"}];
+  }
+}
+
+message GoogleLogin {
+  option (openapi.v3.schema) = {
+    required: ["id_token"];
+  };
+
+  string id_token = 1 [(openapi.v3.property) = {title:"谷歌认证Token"}];
+}
+
+// 登录响应
+message LoginReply {
+  option (openapi.v3.schema) = {
+    required: ["success", "message"];
+  };
+
+  bool success = 1 [(openapi.v3.property) = {title:"是否成功"}];
+  string message = 2 [(openapi.v3.property) = {title:"提示信息"}];
+  UserInfo user_info = 3 [(openapi.v3.property) = {title:"用户信息"}];
+  AuthToken auth_token = 4 [(openapi.v3.property) = {title:"认证令牌"}];
+}
+
+// 身份验证令牌
+message AuthToken {
+  option (openapi.v3.schema) = {
+    required: ["access_token", "refresh_token", "expires_in", "token_type"];
+  };
+
+  string access_token = 1 [(openapi.v3.property) = {title:"访问令牌"}];
+  string refresh_token = 2 [(openapi.v3.property) = {title:"刷新令牌"}];
+  int64 expires_in = 3 [(openapi.v3.property) = {title:"过期时间(秒)"}];
+  string token_type = 4 [(openapi.v3.property) = {title:"令牌类型"}];
+}
+
+// 用户信息请求
+message InfoRequest {
+  string user_id = 1 [(openapi.v3.property) = {title:"用户ID"}];
+}
+
+// 用户信息响应
+message InfoReply {
+  option (openapi.v3.schema) = {
+    required: ["success", "message"];
+  };
+
+  bool success = 1 [(openapi.v3.property) = {title:"是否成功"}];
+  string message = 2 [(openapi.v3.property) = {title:"提示信息"}];
+  UserInfo user_info = 3 [(openapi.v3.property) = {title:"用户信息"}];
+}
+
+// 用户信息
+message UserInfo {
+  option (openapi.v3.schema) = {
+    required: ["user_id", "nickname", "created_at"];
+  };
+
+  string user_id = 1 [(openapi.v3.property) = {title:"用户ID"}];
+  string nickname = 2 [(openapi.v3.property) = {title:"用户昵称"}];
+  string avatar_url = 3 [(openapi.v3.property) = {title:"头像URL"}];
+  repeated string auth_methods = 4 [(openapi.v3.property) = {title:"认证方式列表"}];
+  string phone_number = 5 [(openapi.v3.property) = {title:"手机号码"}];
+  string email = 6 [(openapi.v3.property) = {title:"电子邮箱"}];
+  int64 created_at = 7 [(openapi.v3.property) = {title:"创建时间"}];
+  int64 updated_at = 8 [(openapi.v3.property) = {title:"更新时间"}];
+}

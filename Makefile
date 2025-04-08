@@ -49,10 +49,16 @@ api:
 build:
 	mkdir -p bin/ && go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/ ./...
 
+.PHONY: wire
+# generate wire
+wire:
+	cd cmd/JoeTiktokUser && wire
+
 .PHONY: generate
 # generate
 generate:
 	go generate ./...
+	make wire
 	go mod tidy
 
 .PHONY: all
@@ -60,6 +66,7 @@ generate:
 all:
 	make api;
 	make config;
+	make wire;
 	make generate;
 
 # show help
