@@ -3,7 +3,7 @@ package data
 import (
 	"context"
 
-	"user-svr/internal/biz"
+	"github.com/YangZhaoWeblog/UserService/internal/biz"
 )
 
 type greeterRepo struct {

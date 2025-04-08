@@ -2,7 +2,8 @@ package biz
 
 import (
 	"context"
-	v1 "user-svr/api/helloworld/v1"
+
+	v1 "github.com/YangZhaoWeblog/UserService/api/helloworld/v1"
 
 	"github.com/go-kratos/kratos/v2/errors"
 )

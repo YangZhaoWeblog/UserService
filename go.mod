@@ -1,8 +1,6 @@
 module github.com/YangZhaoWeblog/UserService
 
-go 1.23
-
-toolchain go1.23.1
+go 1.23.0
 
 require (
 	entgo.io/ent v0.14.4

@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"user-svr/internal/conf"
+
+	"github.com/YangZhaoWeblog/UserService/internal/conf"
 
 	"github.com/go-kratos/kratos/v2" // 确保 kratos v2 核心包导入
 	"github.com/go-kratos/kratos/v2/config"

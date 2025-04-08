@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 
-	v1 "user-svr/api/helloworld/v1"
-	"user-svr/internal/biz"
+	v1 "github.com/YangZhaoWeblog/UserService/api/helloworld/v1"
+	"github.com/YangZhaoWeblog/UserService/internal/biz"
 )
 
 // GreeterService is a greeter service.

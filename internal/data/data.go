@@ -1,7 +1,7 @@
 package data
 
 import (
-	"user-svr/internal/conf"
+	"github.com/YangZhaoWeblog/UserService/internal/conf"
 
 	"github.com/google/wire"
 )

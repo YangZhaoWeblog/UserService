@@ -6,11 +6,11 @@
 package main
 
 import (
-	"user-svr/internal/biz"
-	"user-svr/internal/conf"
-	"user-svr/internal/data"
-	"user-svr/internal/server"
-	"user-svr/internal/service"
+	"github.com/YangZhaoWeblog/UserService/internal/biz"
+	"github.com/YangZhaoWeblog/UserService/internal/conf"
+	"github.com/YangZhaoWeblog/UserService/internal/data"
+	"github.com/YangZhaoWeblog/UserService/internal/server"
+	"github.com/YangZhaoWeblog/UserService/internal/service"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/google/wire"

@@ -1,10 +1,10 @@
 package server
 
 import (
-	v1 "user-svr/api/helloworld/v1"
-	userv1 "user-svr/api/user/v1"
-	"user-svr/internal/conf"
-	"user-svr/internal/service"
+	v1 "github.com/YangZhaoWeblog/UserService/api/helloworld/v1"
+	userv1 "github.com/YangZhaoWeblog/UserService/api/user/v1"
+	"github.com/YangZhaoWeblog/UserService/internal/conf"
+	"github.com/YangZhaoWeblog/UserService/internal/service"
 
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/transport/http"

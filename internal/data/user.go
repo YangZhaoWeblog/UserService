@@ -2,7 +2,8 @@ package data
 
 import (
 	"context"
-	"user-svr/internal/biz"
+
+	"github.com/YangZhaoWeblog/UserService/internal/biz"
 )
 
 // UserRepo 实现 biz.UserRepo 接口

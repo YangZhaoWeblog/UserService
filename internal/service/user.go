@@ -2,8 +2,9 @@ package service
 
 import (
 	"context"
-	v1 "user-svr/api/user/v1"
-	"user-svr/internal/biz"
+
+	v1 "github.com/YangZhaoWeblog/UserService/api/user/v1"
+	"github.com/YangZhaoWeblog/UserService/internal/biz"
 )
 
 // UserService 是用户服务
