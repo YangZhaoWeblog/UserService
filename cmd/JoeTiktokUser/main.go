@@ -101,7 +101,6 @@ func main() {
 	defer cleanup()
 
 	fmt.Print(startPrint)
-	log.Info(log.LevelInfo, "8888", "9999")
 
 	// start and wait for stop signal
 	if err := app.Run(); err != nil {
