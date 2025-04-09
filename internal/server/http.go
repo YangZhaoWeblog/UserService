@@ -13,15 +13,14 @@ import (
 )
 
 // NewHTTPServer new an HTTP server.
-func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, user *service.UserService) *http.Server {
+func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, user *service.UserService, metricsData *MetricsData) *http.Server {
 	var opts = []http.ServerOption{
-		http.Address(":8010"),
 		http.Middleware(
 			recovery.Recovery(),
 			tracing.Server(),
 			metrics.Server(
-				metrics.WithSeconds(_metricSeconds),
-				metrics.WithRequests(_metricRequests),
+				metrics.WithSeconds(metricsData.Seconds),
+				metrics.WithRequests(metricsData.Requests),
 			),
 		),
 	}

@@ -6,17 +6,20 @@ import (
 	"github.com/YangZhaoWeblog/UserService/internal/conf"
 	"github.com/YangZhaoWeblog/UserService/internal/service"
 	"github.com/go-kratos/kratos/v2/middleware/metrics"
+	"github.com/go-kratos/kratos/v2/middleware/recovery"
+	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 )
 
 // NewGRPCServer new a gRPC server.
-func NewGRPCServer(c *conf.Server, greeter *service.GreeterService, user *service.UserService) *grpc.Server {
+func NewGRPCServer(c *conf.Server, greeter *service.GreeterService, user *service.UserService, metricsData *MetricsData) *grpc.Server {
 	var opts = []grpc.ServerOption{
-		grpc.Address(":8020"),
 		grpc.Middleware(
+			recovery.Recovery(),
+			tracing.Server(),
 			metrics.Server(
-				metrics.WithSeconds(_metricSeconds),
-				metrics.WithRequests(_metricRequests),
+				metrics.WithSeconds(metricsData.Seconds),
+				metrics.WithRequests(metricsData.Requests),
 			),
 		),
 	}
