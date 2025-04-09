@@ -4,6 +4,7 @@ import (
 	v1 "github.com/YangZhaoWeblog/UserService/api/helloworld/v1"
 	userv1 "github.com/YangZhaoWeblog/UserService/api/user/v1"
 	"github.com/YangZhaoWeblog/UserService/internal/conf"
+	"github.com/YangZhaoWeblog/UserService/internal/pkg"
 	"github.com/YangZhaoWeblog/UserService/internal/service"
 	"github.com/go-kratos/kratos/v2/middleware/metrics"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
@@ -13,7 +14,7 @@ import (
 )
 
 // NewHTTPServer new an HTTP server.
-func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, user *service.UserService, metricsData *MetricsData) *http.Server {
+func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, user *service.UserService, metricsData *pkg.MetricsData) *http.Server {
 	var opts = []http.ServerOption{
 		http.Middleware(
 			recovery.Recovery(),

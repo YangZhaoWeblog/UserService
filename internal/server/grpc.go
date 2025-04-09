@@ -4,6 +4,7 @@ import (
 	v1 "github.com/YangZhaoWeblog/UserService/api/helloworld/v1"
 	userv1 "github.com/YangZhaoWeblog/UserService/api/user/v1"
 	"github.com/YangZhaoWeblog/UserService/internal/conf"
+	"github.com/YangZhaoWeblog/UserService/internal/pkg"
 	"github.com/YangZhaoWeblog/UserService/internal/service"
 	"github.com/go-kratos/kratos/v2/middleware/metrics"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
@@ -12,7 +13,7 @@ import (
 )
 
 // NewGRPCServer new a gRPC server.
-func NewGRPCServer(c *conf.Server, greeter *service.GreeterService, user *service.UserService, metricsData *MetricsData) *grpc.Server {
+func NewGRPCServer(c *conf.Server, greeter *service.GreeterService, user *service.UserService, metricsData *pkg.MetricsData) *grpc.Server {
 	var opts = []grpc.ServerOption{
 		grpc.Middleware(
 			recovery.Recovery(),
