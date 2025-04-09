@@ -4,7 +4,7 @@ go 1.23.0
 
 require (
 	entgo.io/ent v0.14.4
-	github.com/YangZhaoWeblog/GoldenTakin v0.0.0-20250409030221-ae2997b3c5ec
+	github.com/YangZhaoWeblog/GoldenTakin v0.0.0-20250409073914-387b1df4d3a5
 	github.com/envoyproxy/protoc-gen-validate v1.0.4
 	github.com/go-kratos/kratos/v2 v2.8.4
 	github.com/google/gnostic v0.7.0

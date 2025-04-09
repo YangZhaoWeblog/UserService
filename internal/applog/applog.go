@@ -2,6 +2,7 @@ package applog
 
 import (
 	"fmt"
+	"github.com/YangZhaoWeblog/UserService/internal/conf"
 	"os"
 
 	takin_adapter "github.com/YangZhaoWeblog/GoldenTakin/takin_log/adapter"
@@ -16,24 +17,22 @@ import (
 var ProviderSet = wire.NewSet(NewAppLogger, InitGlobalLogger)
 
 // NewAppLogger 创建TakinLogger实例
-func NewAppLogger() (*takin_log.TakinLogger, func()) {
-	// 使用开箱即用方式配置文件日志
-	opts := takin_log.AppLoggerOptions{
-		Component: "test-component",
-		AppName:   "test-app-builtin",
-		MinLevel:  takin_log.DebugLevel,
-		// 直接使用FileLogOption，无需手动创建fileOutput
+func NewAppLogger(confLog *conf.Log, confApp *conf.App) (*takin_log.TakinLogger, func()) {
+	level, _ := takin_log.ParseLogLevel(confLog.Level)
+	opts := takin_log.TakinLoggerOptions{
+		Component: confApp.GetServiceName(),
+		AppName:   confApp.GetAppName(),
+		MinLevel:  level,
 		FileLogOption: &takin_log_outpter.FileLogOption{
-			FilePath:   "./app_builtin.log",
-			MaxSize:    100,
-			MaxBackups: 3,
-			MaxAge:     7,
-			Compress:   true,
-			LocalTime:  true,
+			FilePath:   confLog.Dir,
+			MaxSize:    int(confLog.MaxSize),
+			MaxBackups: int(confLog.MaxBackups),
+			MaxAge:     int(confLog.MaxAge),
+			Compress:   confLog.Compress,
 		},
 	}
 
-	applogger := takin_log.NewAppLogger(opts)
+	applogger := takin_log.NewTakinLogger(opts)
 
 	cleanUp := func() {
 		err := applogger.Close()
