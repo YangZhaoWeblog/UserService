@@ -15,21 +15,21 @@ option java_outer_classname = "userProtoV1";
 service User {
   rpc Register (RegisterRequest) returns (RegisterReply) {
     option (google.api.http) = {
-      post: "/user/register"
+      post: "/v1/user/register"
       body: "*"
     };
   }
 
   rpc Login (LoginRequest) returns (LoginReply) {
     option (google.api.http) = {
-      post: "/user/login"
+      post: "/v1/user/login"
       body: "*"
     };
   }
 
   rpc Info (InfoRequest) returns (InfoReply) {
     option (google.api.http) = {
-      get: "/user/info"
+      get: "/v1/user/info"
     };
   }
 }

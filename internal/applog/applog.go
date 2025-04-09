@@ -13,7 +13,6 @@ import (
 	"github.com/google/wire"
 )
 
-// ProviderSet 提供依赖注入组件
 var ProviderSet = wire.NewSet(NewAppLogger, InitGlobalLogger)
 
 // NewAppLogger 创建TakinLogger实例
