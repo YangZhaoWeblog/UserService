@@ -15,6 +15,7 @@ func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, user *servic
 	var opts = []http.ServerOption{
 		http.Middleware(
 			recovery.Recovery(),
+			// 已通过applog.InitGlobalLogger设置全局日志器，无需在此处引入
 		),
 	}
 	if c.Http.Network != "" {

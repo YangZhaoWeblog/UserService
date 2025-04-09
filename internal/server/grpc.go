@@ -15,6 +15,7 @@ func NewGRPCServer(c *conf.Server, greeter *service.GreeterService, user *servic
 	var opts = []grpc.ServerOption{
 		grpc.Middleware(
 			recovery.Recovery(),
+			// 已通过applog.InitGlobalLogger设置全局日志器，无需在此处引入
 		),
 	}
 	if c.Grpc.Network != "" {

@@ -6,6 +6,7 @@
 package main
 
 import (
+	"github.com/YangZhaoWeblog/UserService/internal/applog"
 	"github.com/YangZhaoWeblog/UserService/internal/biz"
 	"github.com/YangZhaoWeblog/UserService/internal/conf"
 	"github.com/YangZhaoWeblog/UserService/internal/data"
@@ -23,7 +24,7 @@ func wireApp(*conf.Server, *conf.Data, *conf.Log) (*kratos.App, func(), error) {
 		data.ProviderSet,
 		biz.ProviderSet,
 		service.ProviderSet,
-		//applog.ProviderSet,
+		applog.ProviderSet,
 		newApp,
 	))
 }

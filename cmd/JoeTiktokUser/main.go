@@ -6,6 +6,8 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/go-kratos/kratos/v2/log"
+
 	"github.com/YangZhaoWeblog/UserService/internal/conf"
 
 	"github.com/go-kratos/kratos/v2" // 确保 kratos v2 核心包导入
@@ -54,12 +56,13 @@ func init() {
 	configPath = filepath.Join("configs", configMode+".user.config.yaml")
 }
 
-func newApp(gs *grpc.Server, hs *http.Server) *kratos.App {
+func newApp(gs *grpc.Server, hs *http.Server, logger log.Logger) *kratos.App {
 	return kratos.New(
 		kratos.ID(id),
 		kratos.Name(Name),
 		kratos.Version(Version),
 		kratos.Metadata(map[string]string{}),
+		kratos.Logger(logger),
 		kratos.Server(
 			gs,
 			hs,
@@ -69,21 +72,11 @@ func newApp(gs *grpc.Server, hs *http.Server) *kratos.App {
 
 func main() {
 	flag.Parse()
-	//logger := log.With(log.NewStdLogger(os.Stdout),
-	//	"ts", log.DefaultTimestamp,
-	//	"caller", log.DefaultCaller,
-	//	"service.id", id,
-	//	"service.name", Name,
-	//	"service.version", Version,
-	//	"trace.id", tracing.TraceID(),
-	//	"span.id", tracing.SpanID(),
-	//)
 
 	_, err := filepath.Abs(configPath)
 	if err != nil {
 		panic(err)
 	}
-	//logger.Log(log.LevelInfo, "configPath", absConfigPath)
 
 	c := config.New(
 		config.WithSource(
@@ -108,6 +101,7 @@ func main() {
 	defer cleanup()
 
 	fmt.Print(startPrint)
+	log.Info(log.LevelInfo, "8888", "9999")
 
 	// start and wait for stop signal
 	if err := app.Run(); err != nil {
