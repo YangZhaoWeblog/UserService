@@ -1,19 +1,24 @@
 version: '3.9'
 services:
-  user-service:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      ssh:
-        - default
-    restart: on-failure
-    ports:
-      - "8010:8010"
-      - "9010:9010"
-    environment:
-      - CONFIG_MODE=local
-    volumes:
-      - ./configs/local.config.yaml:/app/configs/local.config.yaml
+#  user-service:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#      ssh:
+#        - default
+#    restart: on-failure
+#    ports:
+#      - "8010:8010"
+#      - "9010:9010"
+#    environment:
+#      - CONFIG_MODE=local
+#    volumes:
+#      - ./configs/local.config.yaml:/var/configs/local.config.yaml
+
+#  启动后可以访问：
+#  Prometheus: http://localhost:9090
+#  Grafana:
+#    http://localhost:3000 (用户名/密码: admin/admin)
 
   prometheus:
     image: prom/prometheus:latest
@@ -21,7 +26,9 @@ services:
     ports:
       - "9090:9090"
     volumes:
+      # 本地地址: 容器地址
       - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      # 命名卷（卷名:容器地址）
       - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -34,30 +41,34 @@ services:
     networks:
       - monitoring
 
-#    grafana:
-#      image: grafana/grafana:latest
-#      container_name: grafana
-#      ports:
-#        - "3000:3000"
-#      volumes:
-#        - grafana_data:/var/lib/grafana
-#        - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
-#      environment:
-#        - GF_SECURITY_ADMIN_USER=admin
-#        - GF_SECURITY_ADMIN_PASSWORD=admin
-#        - GF_USERS_ALLOW_SIGN_UP=false
-#      depends_on:
-#        - prometheus
-#      networks:
-#        - monitoring
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
+    networks:
+      - monitoring
 
+# 创建一个独立网络，使容器间可以相互通信
+# 使用 bridge 网络类型，允许Grafana通过容器名称(prometheus)而非IP访问Prometheus 
 networks:
   monitoring:
     driver: bridge
 
+# 声明命名卷，告诉Docker"这是一个需要创建的持久卷", 保存数据
 volumes:
   prometheus_data:
-#  grafana_data:
+  grafana_data:
+
+
 
 
 # mysql:
