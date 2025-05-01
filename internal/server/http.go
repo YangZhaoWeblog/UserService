@@ -19,7 +19,7 @@ func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, user *servic
 		http.Middleware(
 			recovery.Recovery(), //自动捕获 panic 确保线上服务不崩溃，测试环境应当尽可能让崩溃
 			tracing.Server(),
-			metrics.Server(
+			metrics.Server( //指标中间件
 				metrics.WithSeconds(metricsData.Seconds),
 				metrics.WithRequests(metricsData.Requests),
 			),

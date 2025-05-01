@@ -2,10 +2,12 @@ package service
 
 import (
 	"context"
+
 	"github.com/YangZhaoWeblog/GoldenTakin/takin_log"
 
 	v1 "github.com/YangZhaoWeblog/UserService/api/user/v1"
 	"github.com/YangZhaoWeblog/UserService/internal/biz"
+	"github.com/go-kratos/kratos/v2/errors"
 )
 
 // UserService 是用户服务
@@ -25,21 +27,25 @@ func NewUserService(uc *biz.UserUsecase, log *takin_log.TakinLogger) *UserServic
 func (s *UserService) Register(ctx context.Context, req *v1.RegisterRequest) (*v1.RegisterReply, error) {
 	// TODO: 实现注册逻辑
 
-	return &v1.RegisterReply{
-		Success: true,
-		Message: "注册成功",
-	}, nil
+	return nil, errors.New(520, "LOGIN_FAILED", "登录失败")
+	// return &v1.RegisterReply{
+	// 	Success: true,
+	// 	Message: "注册成功",
+	// }, nil
 }
 
 // Login 实现登录接口
 func (s *UserService) Login(ctx context.Context, req *v1.LoginRequest) (*v1.LoginReply, error) {
 	// TODO: 实现登录逻辑
 
-	s.logHelper.Info("测试:", "Login", "是否", "成功")
-	return &v1.LoginReply{
-		Success: true,
-		Message: "登录成功",
-	}, nil
+	//s.logHelper.Info("测试:", "Login", "是否", "成功")
+	return nil, errors.New(521, "LOGIN_FAILED", "登录失败")
+
+	// 不可达代码
+	//return &v1.LoginReply{
+	//	Success: true,
+	//	Message: "登录成功",
+	//}, nil
 }
 
 // Info 实现获取用户信息接口
