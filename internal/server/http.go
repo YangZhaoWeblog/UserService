@@ -38,7 +38,7 @@ func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, user *servic
 
 	srv := http.NewServer(opts...)
 
-	// Prometheus定期访问http://host.docker.internal:8010/metrics, 抓取收集的指标
+	// Prometheus 定期访问 http://host.docker.internal:8010/metrics, 抓取收集的指标
 	srv.Handle("/metrics", promhttp.Handler())
 
 	v1.RegisterGreeterHTTPServer(srv, greeter)

@@ -5,10 +5,8 @@ import (
 	"github.com/YangZhaoWeblog/UserService/internal/conf"
 	"os"
 
-	takin_adapter "github.com/YangZhaoWeblog/GoldenTakin/takin_log/adapter"
-	takin_log_outpter "github.com/YangZhaoWeblog/GoldenTakin/takin_log/outputer"
-
 	"github.com/YangZhaoWeblog/GoldenTakin/takin_log"
+	takin_adapter "github.com/YangZhaoWeblog/GoldenTakin/takin_log/adapter"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
 )
@@ -22,13 +20,14 @@ func NewAppLogger(confLog *conf.Log, confApp *conf.App) (*takin_log.TakinLogger,
 		Component: confApp.GetServiceName(),
 		AppName:   confApp.GetAppName(),
 		MinLevel:  level,
-		FileLogOption: &takin_log_outpter.FileLogOption{
-			FilePath:   confLog.Dir,
-			MaxSize:    int(confLog.MaxSize),
-			MaxBackups: int(confLog.MaxBackups),
-			MaxAge:     int(confLog.MaxAge),
-			Compress:   confLog.Compress,
-		},
+		// 现代微服务不推荐写入日志到目录，没别的
+		//FileLogOption: &takin_log_outpter.FileLogOption{
+		//	FilePath:   confLog.Dir,
+		//	MaxSize:    int(confLog.MaxSize),
+		//	MaxBackups: int(confLog.MaxBackups),
+		//	MaxAge:     int(confLog.MaxAge),
+		//	Compress:   confLog.Compress,
+		//},
 	}
 
 	applogger := takin_log.NewTakinLogger(opts)
