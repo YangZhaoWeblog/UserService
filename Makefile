@@ -47,12 +47,12 @@ api:
 .PHONY: build
 # build
 build:
-	mkdir -p bin/ && go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/ ./...
+	mkdir -p bin/ && go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/server ./cmd/UserService/...
 
 .PHONY: wire
 # generate wire
 wire:
-	cd cmd/JoeTiktokUser && wire
+	cd cmd/UserService && wire
 
 .PHONY: generate
 # generate
