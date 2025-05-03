@@ -1,4 +1,3 @@
-
 # 语法声明
 FROM golang:1.23.0 AS builder
 
