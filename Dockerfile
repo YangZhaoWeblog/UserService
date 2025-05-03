@@ -2,6 +2,9 @@
 # 语法声明
 FROM golang:1.23.0 AS builder
 
+ENV GOPROXY=https://goproxy.cn,direct
+ENV GO111MODULE=on
+
 # 安装必要的构建工具
 RUN apt-get update && apt-get install -y --no-install-recommends \
     protobuf-compiler \
@@ -16,9 +19,8 @@ RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 # 配置 Git 使用 SSH 代替 HTTPS
 RUN git config --global url."git@github.com:".insteadOf "https://github.com/"
 
-
 # 设置 Go 私有模块
-ENV GOPRIVATE=github.com/Sider-ai/*
+# ENV GOPRIVATE=github.com/Sider-ai/*
 
 COPY . /src
 WORKDIR /src

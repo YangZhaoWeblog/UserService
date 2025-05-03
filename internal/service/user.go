@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+
 	"github.com/YangZhaoWeblog/GoldenTakin/takin_log"
 
 	v1 "github.com/YangZhaoWeblog/UserService/api/user/v1"
@@ -27,11 +28,11 @@ func (s *UserService) Register(ctx context.Context, req *v1.RegisterRequest) (*v
 	// TODO: 实现注册逻辑
 	s.logHelper.ErrorContext(ctx, "hahaha 示例错误")
 
-	return nil, errors.New(520, "LOGIN_FAILED", "登录失败")
-	// return &v1.RegisterReply{
-	// 	Success: true,
-	// 	Message: "注册成功",
-	// }, nil
+	// return nil, errors.New(520, "LOGIN_FAILED", "登录失败---")
+	return &v1.RegisterReply{
+		Success: true,
+		Message: "注册成功",
+	}, nil
 }
 
 // Login 实现登录接口
