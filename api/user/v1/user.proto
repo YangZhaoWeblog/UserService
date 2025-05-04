@@ -32,6 +32,13 @@ service User {
       get: "/v1/user/info"
     };
   }
+  
+  // 测试服务图功能的API
+  rpc TestServiceGraph (TestServiceGraphRequest) returns (TestServiceGraphReply) {
+    option (google.api.http) = {
+      get: "/v1/user/test-service-graph"
+    };
+  }
 }
 
 // 注册请求
@@ -166,4 +173,15 @@ message UserInfo {
   string email = 6 [(openapi.v3.property) = {title:"电子邮箱"}];
   int64 created_at = 7 [(openapi.v3.property) = {title:"创建时间"}];
   int64 updated_at = 8 [(openapi.v3.property) = {title:"更新时间"}];
+}
+
+// 服务图测试请求
+message TestServiceGraphRequest {
+  int32 iterations = 1 [(openapi.v3.property) = {title:"测试迭代次数"}];
+}
+
+// 服务图测试响应
+message TestServiceGraphReply {
+  bool success = 1 [(openapi.v3.property) = {title:"是否成功"}];
+  string message = 2 [(openapi.v3.property) = {title:"提示信息"}];
 }

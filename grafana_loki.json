@@ -719,45 +719,7 @@
           "refId": "A"
         }
       ],
-      "title": "日志查询 (按级别)",
-      "type": "logs"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "${DS_LOKI}"
-      },
-      "description": "按组件过滤的日志",
-      "gridPos": {
-        "h": 10,
-        "w": 24,
-        "x": 0,
-        "y": 37
-      },
-      "id": 22,
-      "options": {
-        "dedupStrategy": "none",
-        "enableLogDetails": true,
-        "prettifyLogMessage": false,
-        "showCommonLabels": false,
-        "showLabels": false,
-        "showTime": true,
-        "sortOrder": "Descending",
-        "wrapLogMessage": false
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "${DS_LOKI}"
-          },
-          "editorMode": "code",
-          "expr": "{container=\"$service\", component=\"$component\"} | level=~\"$log_level\"",
-          "queryType": "range",
-          "refId": "A"
-        }
-      ],
-      "title": "日志查询 (按组件)",
+      "title": "日志查询 (按级别和组件)",
       "type": "logs"
     },
     {
@@ -766,7 +728,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 47
+        "y": 37
       },
       "id": 24,
       "panels": [],
@@ -783,7 +745,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 48
+        "y": 38
       },
       "id": 26,
       "options": {
@@ -803,42 +765,25 @@
             "uid": "${DS_LOKI}"
           },
           "editorMode": "code",
-          "expr": "{container=\"$service\"} | trace_id != \"\"",
+          "expr": "{container=\"$service\"} | json | trace_id != \"\"",
           "queryType": "range",
           "refId": "A"
         }
       ],
       "title": "含有追踪ID的日志",
-      "transformations": [],
-      "type": "logs"
-    },
-    {
-      "datasource": {
-        "type": "tempo",
-        "uid": "${DS_TEMPO}"
-      },
-      "description": "服务链路追踪视图 (需要Tempo数据源)",
-      "gridPos": {
-        "h": 15,
-        "w": 24,
-        "x": 0,
-        "y": 56
-      },
-      "id": 28,
-      "targets": [
+      "transformations": [
         {
-          "datasource": {
-            "type": "tempo",
-            "uid": "${DS_TEMPO}"
-          },
-          "limit": 20,
-          "query": "service.name=\"$service\"",
-          "queryType": "traceqlSearch",
-          "refId": "A"
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "trace_id": "TraceID"
+            }
+          }
         }
       ],
-      "title": "服务追踪视图",
-      "type": "traces"
+      "type": "logs"
     },
     {
       "datasource": {
@@ -866,7 +811,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 48
+        "y": 38
       },
       "id": 30,
       "options": {
@@ -897,6 +842,170 @@
       ],
       "title": "服务调用关系图",
       "type": "nodeGraph"
+    },
+    {
+      "datasource": {
+        "type": "tempo",
+        "uid": "${DS_TEMPO}"
+      },
+      "description": "通用追踪列表视图 (使用TraceQL)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Trace ID"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "查看追踪详情",
+                    "url": "/explore?left=%7B%22datasource%22:%22${DS_TEMPO}%22,%22queries%22:%5B%7B%22query%22:%22${__value.raw}%22,%22queryType%22:%22traceqlSearch%22%7D%5D%7D",
+                    "targetBlank": true
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 250
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Duration"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ms"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 500
+                    },
+                    {
+                      "color": "orange",
+                      "value": 800
+                    },
+                    {
+                      "color": "red",
+                      "value": 1000
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 46
+      },
+      "id": 50,
+      "options": {
+        "cellHeight": "md",
+        "footer": {
+          "countRows": true,
+          "fields": "",
+          "reducer": ["count"],
+          "show": true
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Start time"
+          }
+        ]
+      },
+      "pluginVersion": "10.1.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "tempo",
+            "uid": "${DS_TEMPO}"
+          },
+          "limit": 50,
+          "query": "{ service.name = \"$service\" || root.service.name = \"$service\" } | duration > 0ms",
+          "queryType": "traceqlSearch",
+          "refId": "A"
+        }
+      ],
+      "title": "追踪列表",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "tempo",
+        "uid": "${DS_TEMPO}"
+      },
+      "description": "错误追踪分析（基于错误日志关联的追踪）",
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 56
+      },
+      "id": 32,
+      "targets": [
+        {
+          "datasource": {
+            "type": "tempo",
+            "uid": "${DS_TEMPO}"
+          },
+          "limit": 20,
+          "query": "status=\"ERROR\" and service.name=\"$service\"",
+          "queryType": "traceqlSearch",
+          "refId": "A"
+        }
+      ],
+      "title": "错误追踪分析",
+      "type": "traces"
     }
   ],
   "refresh": "10s",
@@ -1027,25 +1136,20 @@
       {
         "current": {
           "selected": false,
-          "text": "",
-          "value": ""
+          "text": "Prometheus",
+          "value": "prometheus"
         },
-        "datasource": {
-          "type": "loki",
-          "uid": "${DS_LOKI}"
-        },
-        "definition": "label_values(trace_id)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
-        "name": "trace_id",
+        "name": "DS_PROMETHEUS",
         "options": [],
-        "query": "label_values(trace_id)",
+        "query": "prometheus",
+        "queryValue": "",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
+        "type": "datasource"
       }
     ]
   },
@@ -1056,7 +1160,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "现代微服务日志与链路追踪分析仪表板",
-  "uid": "microservice-logs",
+  "uid": "microservice-logs-new123",
   "version": 1,
   "weekStart": ""
 }

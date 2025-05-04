@@ -608,10 +608,6 @@ github.com/DATA-DOG/go-sqlmock v1.5.0 h1:Shsta01QNfFxHCfpW6YH2STWB0MudeXXEWMr20O
 github.com/DATA-DOG/go-sqlmock v1.5.0/go.mod h1:f/Ixk793poVmq4qj/V1dPUg2JEAKC73Q5eFN3EC/SaM=
 github.com/JohnCGriffin/overflow v0.0.0-20211019200055-46fa312c352c/go.mod h1:X0CRv0ky0k6m906ixxpzmDRLvX58TFUKS2eePweuyxk=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
-github.com/YangZhaoWeblog/GoldenTakin v0.0.0-20250409075218-1489f1e86e82 h1:bxGxCC/c5UXvxiZln4MRJ2JKWAhR8RDzgNKj2/KbLqc=
-github.com/YangZhaoWeblog/GoldenTakin v0.0.0-20250409075218-1489f1e86e82/go.mod h1:zpplJiOfaPzcukCLn5+EOD7jUYGpGjMX+Ly1hFKKvyo=
-github.com/YangZhaoWeblog/GoldenTakin v0.0.0-20250504100552-6794a841cef2 h1:yFIM5McSDMAkRrxlfHY/yKXSaP58ZFhzUqiTbsCmv3Q=
-github.com/YangZhaoWeblog/GoldenTakin v0.0.0-20250504100552-6794a841cef2/go.mod h1:zpplJiOfaPzcukCLn5+EOD7jUYGpGjMX+Ly1hFKKvyo=
 github.com/YangZhaoWeblog/GoldenTakin v0.0.0-20250504115148-7475cf16d7f7 h1:YCWu8xmweHHkcoPoU22jI7nMhc0pBFJZ99PuhMjrLig=
 github.com/YangZhaoWeblog/GoldenTakin v0.0.0-20250504115148-7475cf16d7f7/go.mod h1:zpplJiOfaPzcukCLn5+EOD7jUYGpGjMX+Ly1hFKKvyo=
 github.com/agext/levenshtein v1.2.1 h1:QmvMAjj2aEICytGiWzmxoE0x2KZvE0fvmqMOfy2tjT8=
