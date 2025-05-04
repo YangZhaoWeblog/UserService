@@ -96,7 +96,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "error"
+              "options": "ERROR"
             },
             "properties": [
               {
@@ -111,7 +111,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "warn"
+              "options": "WARN"
             },
             "properties": [
               {
@@ -126,7 +126,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "info"
+              "options": "INFO"
             },
             "properties": [
               {
@@ -141,7 +141,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "debug"
+              "options": "DEBUG"
             },
             "properties": [
               {
@@ -181,8 +181,8 @@
             "uid": "${DS_LOKI}"
           },
           "editorMode": "code",
-          "expr": "sum(count_over_time({job=\"$job\"} | json | level = \"error\" [$__interval]))",
-          "legendFormat": "error",
+          "expr": "sum(count_over_time({container=\"$service\", level=\"ERROR\"} [$__interval]))",
+          "legendFormat": "ERROR",
           "queryType": "range",
           "refId": "A"
         },
@@ -192,9 +192,9 @@
             "uid": "${DS_LOKI}"
           },
           "editorMode": "code",
-          "expr": "sum(count_over_time({job=\"$job\"} | json | level = \"warn\" [$__interval]))",
+          "expr": "sum(count_over_time({container=\"$service\", level=\"WARN\"} [$__interval]))",
           "hide": false,
-          "legendFormat": "warn",
+          "legendFormat": "WARN",
           "queryType": "range",
           "refId": "B"
         },
@@ -204,9 +204,9 @@
             "uid": "${DS_LOKI}"
           },
           "editorMode": "code",
-          "expr": "sum(count_over_time({job=\"$job\"} | json | level = \"info\" [$__interval]))",
+          "expr": "sum(count_over_time({container=\"$service\", level=\"INFO\"} [$__interval]))",
           "hide": false,
-          "legendFormat": "info",
+          "legendFormat": "INFO",
           "queryType": "range",
           "refId": "C"
         },
@@ -216,9 +216,9 @@
             "uid": "${DS_LOKI}"
           },
           "editorMode": "code",
-          "expr": "sum(count_over_time({job=\"$job\"} | json | level = \"debug\" [$__interval]))",
+          "expr": "sum(count_over_time({container=\"$service\", level=\"DEBUG\"} [$__interval]))",
           "hide": false,
-          "legendFormat": "debug",
+          "legendFormat": "DEBUG",
           "queryType": "range",
           "refId": "D"
         }
@@ -291,7 +291,7 @@
             "uid": "${DS_LOKI}"
           },
           "editorMode": "code",
-          "expr": "sum(count_over_time({job=\"$job\"} | json | level=\"error\" [$__range]))",
+          "expr": "sum(count_over_time({container=\"$service\", level=\"ERROR\"} [$__range]))",
           "legendFormat": "错误数",
           "queryType": "range",
           "refId": "A"
@@ -324,7 +324,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "error"
+              "options": "ERROR"
             },
             "properties": [
               {
@@ -339,7 +339,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "warn"
+              "options": "WARN"
             },
             "properties": [
               {
@@ -354,7 +354,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "info"
+              "options": "INFO"
             },
             "properties": [
               {
@@ -369,7 +369,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "debug"
+              "options": "DEBUG"
             },
             "properties": [
               {
@@ -418,8 +418,8 @@
             "uid": "${DS_LOKI}"
           },
           "editorMode": "code",
-          "expr": "sum(count_over_time({job=\"$job\"} | json | level=\"error\" [$__range]))",
-          "legendFormat": "error",
+          "expr": "sum(count_over_time({container=\"$service\", level=\"ERROR\"} [$__range]))",
+          "legendFormat": "ERROR",
           "queryType": "range",
           "refId": "A"
         },
@@ -429,9 +429,9 @@
             "uid": "${DS_LOKI}"
           },
           "editorMode": "code",
-          "expr": "sum(count_over_time({job=\"$job\"} | json | level=\"warn\" [$__range]))",
+          "expr": "sum(count_over_time({container=\"$service\", level=\"WARN\"} [$__range]))",
           "hide": false,
-          "legendFormat": "warn",
+          "legendFormat": "WARN",
           "queryType": "range",
           "refId": "B"
         },
@@ -441,9 +441,9 @@
             "uid": "${DS_LOKI}"
           },
           "editorMode": "code",
-          "expr": "sum(count_over_time({job=\"$job\"} | json | level=\"info\" [$__range]))",
+          "expr": "sum(count_over_time({container=\"$service\", level=\"INFO\"} [$__range]))",
           "hide": false,
-          "legendFormat": "info",
+          "legendFormat": "INFO",
           "queryType": "range",
           "refId": "C"
         },
@@ -453,9 +453,9 @@
             "uid": "${DS_LOKI}"
           },
           "editorMode": "code",
-          "expr": "sum(count_over_time({job=\"$job\"} | json | level=\"debug\" [$__range]))",
+          "expr": "sum(count_over_time({container=\"$service\", level=\"DEBUG\"} [$__range]))",
           "hide": false,
-          "legendFormat": "debug",
+          "legendFormat": "DEBUG",
           "queryType": "range",
           "refId": "D"
         }
@@ -464,12 +464,77 @@
       "type": "piechart"
     },
     {
+      "datasource": {
+        "type": "loki",
+        "uid": "${DS_LOKI}"
+      },
+      "description": "组件分布",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 9
+      },
+      "id": 20,
+      "options": {
+        "displayLabels": ["percent"],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": true
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${DS_LOKI}"
+          },
+          "editorMode": "code",
+          "expr": "sum by(component) (count_over_time({container=\"$service\"} [$__range]))",
+          "legendFormat": "{{component}}",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "组件日志分布",
+      "type": "piechart"
+    },
+    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 17
       },
       "id": 14,
       "panels": [],
@@ -486,7 +551,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 10
+        "y": 18
       },
       "id": 8,
       "options": {
@@ -506,7 +571,7 @@
             "uid": "${DS_LOKI}"
           },
           "editorMode": "code",
-          "expr": "{job=\"$job\"} | json | level=\"error\"",
+          "expr": "{container=\"$service\", level=\"ERROR\"}",
           "queryType": "range",
           "refId": "A"
         }
@@ -566,7 +631,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 10
+        "y": 18
       },
       "id": 10,
       "options": {
@@ -597,7 +662,7 @@
             "uid": "${DS_LOKI}"
           },
           "editorMode": "code",
-          "expr": "topk(10, sum by(msg) (count_over_time({job=\"$job\"} | json | level=\"error\" [$__range])))",
+          "expr": "topk(10, sum by(msg) (count_over_time({container=\"$service\", level=\"ERROR\"} [$__range])))",
           "legendFormat": "{{msg}}",
           "queryType": "range",
           "refId": "A"
@@ -612,7 +677,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 26
       },
       "id": 16,
       "panels": [],
@@ -624,12 +689,12 @@
         "type": "loki",
         "uid": "${DS_LOKI}"
       },
-      "description": "所有日志",
+      "description": "按服务和级别过滤的详细日志",
       "gridPos": {
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 19
+        "y": 27
       },
       "id": 18,
       "options": {
@@ -649,13 +714,189 @@
             "uid": "${DS_LOKI}"
           },
           "editorMode": "code",
-          "expr": "{job=\"$job\"} | json | level=~\"$log_level\"",
+          "expr": "{container=\"$service\", level=~\"$log_level\"}",
           "queryType": "range",
           "refId": "A"
         }
       ],
       "title": "日志查询 (按级别)",
       "type": "logs"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "${DS_LOKI}"
+      },
+      "description": "按组件过滤的日志",
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 37
+      },
+      "id": 22,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${DS_LOKI}"
+          },
+          "editorMode": "code",
+          "expr": "{container=\"$service\", component=\"$component\"} | level=~\"$log_level\"",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "日志查询 (按组件)",
+      "type": "logs"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 47
+      },
+      "id": 24,
+      "panels": [],
+      "title": "链路追踪分析",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "${DS_LOKI}"
+      },
+      "description": "含有追踪ID的日志",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 48
+      },
+      "id": 26,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": true,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${DS_LOKI}"
+          },
+          "editorMode": "code",
+          "expr": "{container=\"$service\"} | trace_id != \"\"",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "含有追踪ID的日志",
+      "transformations": [],
+      "type": "logs"
+    },
+    {
+      "datasource": {
+        "type": "tempo",
+        "uid": "${DS_TEMPO}"
+      },
+      "description": "服务链路追踪视图 (需要Tempo数据源)",
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 56
+      },
+      "id": 28,
+      "targets": [
+        {
+          "datasource": {
+            "type": "tempo",
+            "uid": "${DS_TEMPO}"
+          },
+          "limit": 20,
+          "query": "service.name=\"$service\"",
+          "queryType": "traceqlSearch",
+          "refId": "A"
+        }
+      ],
+      "title": "服务追踪视图",
+      "type": "traces"
+    },
+    {
+      "datasource": {
+        "type": "tempo",
+        "uid": "${DS_TEMPO}"
+      },
+      "description": "服务调用关系图",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 48
+      },
+      "id": 30,
+      "options": {
+        "edges": {
+          "mainStatUnit": "short"
+        },
+        "nodes": {
+          "mainStatUnit": "short",
+          "secondaryStatUnit": "short"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "tempo",
+            "uid": "${DS_TEMPO}"
+          },
+          "limit": 100,
+          "query": "service.name=\"$service\"",
+          "queryType": "serviceGraph",
+          "refId": "A"
+        }
+      ],
+      "title": "服务调用关系图",
+      "type": "nodeGraph"
     }
   ],
   "refresh": "10s",
@@ -692,13 +933,13 @@
           "type": "loki",
           "uid": "${DS_LOKI}"
         },
-        "definition": "label_values(job)",
+        "definition": "label_values(container)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
-        "name": "job",
+        "name": "service",
         "options": [],
-        "query": "label_values(job)",
+        "query": "label_values(container)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -708,8 +949,8 @@
       {
         "current": {
           "selected": true,
-          "text": ["error", "warn", "info", "debug"],
-          "value": ["error", "warn", "info", "debug"]
+          "text": ["ERROR", "WARN", "INFO", "DEBUG"],
+          "value": ["ERROR", "WARN", "INFO", "DEBUG"]
         },
         "hide": 0,
         "includeAll": false,
@@ -718,29 +959,93 @@
         "options": [
           {
             "selected": true,
-            "text": "error",
-            "value": "error"
+            "text": "ERROR",
+            "value": "ERROR"
           },
           {
             "selected": true,
-            "text": "warn",
-            "value": "warn"
+            "text": "WARN",
+            "value": "WARN"
           },
           {
             "selected": true,
-            "text": "info",
-            "value": "info"
+            "text": "INFO",
+            "value": "INFO"
           },
           {
             "selected": true,
-            "text": "debug",
-            "value": "debug"
+            "text": "DEBUG",
+            "value": "DEBUG"
           }
         ],
-        "query": "error,warn,info,debug",
+        "query": "ERROR,WARN,INFO,DEBUG",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "UserService",
+          "value": "UserService"
+        },
+        "datasource": {
+          "type": "loki",
+          "uid": "${DS_LOKI}"
+        },
+        "definition": "label_values(component)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "component",
+        "options": [],
+        "query": "label_values(component)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "Tempo",
+          "value": "tempo"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "DS_TEMPO",
+        "options": [],
+        "query": "tempo",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "",
+          "value": ""
+        },
+        "datasource": {
+          "type": "loki",
+          "uid": "${DS_LOKI}"
+        },
+        "definition": "label_values(trace_id)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "trace_id",
+        "options": [],
+        "query": "label_values(trace_id)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
       }
     ]
   },
@@ -750,7 +1055,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "微服务日志分析仪表板",
+  "title": "现代微服务日志与链路追踪分析仪表板",
   "uid": "microservice-logs",
   "version": 1,
   "weekStart": ""
