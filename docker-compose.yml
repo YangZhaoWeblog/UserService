@@ -1,0 +1,133 @@
+version: '3'
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # 允许访问主机服务
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_FEATURE_TOGGLES_ENABLE=traceqlEditor # 启用 Tempo 查询编辑器
+    depends_on:
+      - prometheus
+      - loki  # 添加对 Loki 的依赖
+    networks:
+      - monitoring
+
+  # 添加 Loki 服务
+  loki:
+    image: grafana/loki:2.9.0
+    container_name: loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - monitoring
+    volumes:
+      - loki_data:/loki
+
+  # 添加Tempo链路追踪服务
+  tempo:
+    image: grafana/tempo:latest
+    container_name: tempo
+    ports:
+      - "3200:3200"    # tempo api
+      - "4317:4317"  # 添加这一行
+    command: -config.file=/etc/tempo/tempo-config.yaml
+    volumes:
+      - ./monitoring/tempo:/etc/tempo
+      - tempo_data:/tmp/tempo
+    user: root  # 添加这行以确保有足够权限
+    networks:
+      - monitoring
+
+  # 添加 Promtail 服务
+  promtail:
+    image: grafana/promtail:2.9.0
+    container_name: promtail
+    volumes:
+      - /var/log:/var/log:ro  # 挂载宿主机日志目录
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro  # 挂载 Docker 容器日志
+      - ./monitoring/promtail:/etc/promtail  # 挂载 Promtail 配置
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command: -config.file=/etc/promtail/config.yml
+    depends_on:
+      - loki
+    networks:
+      - monitoring
+  
+  userservice:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      ssh:
+        - default
+    container_name: userservice
+    environment:
+      - CONFIG_MODE=local
+    ports:
+      - "8010:8010"  # HTTP 端口
+      - "9010:9010"  # gRPC 端口
+    volumes:
+      - ./configs:/app/configs  # 挂载配置文件
+#      - ./configs/test.config.yaml:/app/configs/test.config.yaml
+    depends_on:
+      - loki
+      - prometheus
+      - tempo  # 明确依赖tempo服务
+   # 确保容器总是重启
+    restart: on-failure
+    # 使用 json-file 驱动，配合 Promtail 多阶段处理
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "3"
+        tag: "{{.Name}}"
+    networks:
+      - monitoring
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # 允许访问主机服务
+
+# 创建一个独立网络，使容器间可以相互通信
+# 使用 bridge 网络类型，允许Grafana通过容器名称(prometheus)而非IP访问Prometheus
+networks:
+  monitoring:
+    driver: bridge
+
+# 声明命名卷，告诉Docker"这是一个需要创建的持久卷", 保存数据
+volumes:
+  prometheus_data:
+  grafana_data:
+  loki_data:  # 添加 Loki 数据卷
+  tempo_data:
+
+#  启动后可以访问：
+#  Prometheus: http://localhost:9090
+#  Grafana:
+#    http://localhost:3000 (用户名/密码: admin/admin)
+
