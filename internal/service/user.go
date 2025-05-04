@@ -25,7 +25,7 @@ func NewUserService(uc *biz.UserUsecase, log *takin_log.TakinLogger) *UserServic
 
 // Register 实现注册接口
 func (s *UserService) Register(ctx context.Context, req *v1.RegisterRequest) (*v1.RegisterReply, error) {
-	// TODO: 实现注册逻辑
+	// 输出原有的错误日志，看是否自动包含 trace 信息
 	s.logHelper.ErrorContext(ctx, "hahaha 示例错误")
 
 	// return nil, errors.New(520, "LOGIN_FAILED", "登录失败---")

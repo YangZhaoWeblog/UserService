@@ -1,17 +1,15 @@
-package applog
+package observability
 
 import (
 	"fmt"
-	"github.com/YangZhaoWeblog/UserService/internal/conf"
-	"os"
-
-	"github.com/YangZhaoWeblog/GoldenTakin/takin_log"
 	takin_adapter "github.com/YangZhaoWeblog/GoldenTakin/takin_log/adapter"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/google/wire"
-)
+	"os"
 
-var ProviderSet = wire.NewSet(NewAppLogger, InitGlobalLogger)
+	"github.com/YangZhaoWeblog/UserService/internal/conf"
+
+	"github.com/YangZhaoWeblog/GoldenTakin/takin_log"
+)
 
 // NewAppLogger 创建TakinLogger实例
 func NewAppLogger(confLog *conf.Log, confApp *conf.App) (*takin_log.TakinLogger, func()) {
@@ -42,7 +40,7 @@ func NewAppLogger(confLog *conf.Log, confApp *conf.App) (*takin_log.TakinLogger,
 	return applogger, cleanUp
 }
 
-// 初始化全局日志器
+// // 初始化全局日志器
 func InitGlobalLogger(takinLogger *takin_log.TakinLogger) log.Logger {
 	// 创建适配器并设置为全局日志器
 	adapter := takin_adapter.NewKratosAdapter(takinLogger)

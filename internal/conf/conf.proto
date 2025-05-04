@@ -10,6 +10,7 @@ message Bootstrap {
   Data data = 2;
   App app = 3;
   Log log = 4;
+  Trace trace = 5; 
 }
 
 message App {
@@ -17,6 +18,13 @@ message App {
   string service_name = 2;
 }
 
+
+message Trace {
+  string endpoint = 1; // Tempo OTLP gRPC 接入点, 例如 "tempo:4317"
+  double sample_ratio = 2; // 采样率, 1.0 表示全部采样, 0.1 表示采样 10%
+  // 可选: string environment = 4; // 环境标识, 例如 "production", "development"
+  // 可选: string service_version = 5; // 服务版本
+}
 
 message Log {
   string dir =1;

@@ -1,9 +1,8 @@
-package other
+package observability
 
 import (
 	"github.com/YangZhaoWeblog/UserService/internal/conf"
 	"github.com/go-kratos/kratos/v2/middleware/metrics"
-	"github.com/google/wire"
 	"go.opentelemetry.io/otel/exporters/prometheus"
 	"go.opentelemetry.io/otel/metric"
 	sdkmetric "go.opentelemetry.io/otel/sdk/metric"
@@ -62,5 +61,3 @@ func NewMetrics(app *conf.App) (*MetricsData, error) {
 		Requests: requests,
 	}, nil
 }
-
-var ProviderSet = wire.NewSet(NewMetrics)
