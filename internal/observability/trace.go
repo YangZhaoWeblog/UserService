@@ -32,7 +32,8 @@ func NewTracerProvider(cfg *conf.Trace, cfgApp *conf.App, logHelper *takin_log.T
 	// 你可能需要根据实际情况添加 grpc.WithTransportCredentials(...)
 	exporter, err := otlptracegrpc.New(ctx,
 		otlptracegrpc.WithEndpoint(cfg.Endpoint),
-		otlptracegrpc.WithInsecure(), // 生产环境需要移除或替换为 TLS 配置
+		otlptracegrpc.WithInsecure(),             // 生产环境需要移除或替换为 TLS 配置
+		otlptracegrpc.WithTimeout(5*time.Second), // 添加超时设置
 		// otlptracegrpc.WithDialOption(grpc.WithBlock()), // 可选: 启动时阻塞直到连接建立
 	)
 	if err != nil {
