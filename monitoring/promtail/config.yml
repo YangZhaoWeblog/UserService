@@ -1,0 +1,79 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+  # 收集 Docker 容器日志 (本地开发环境)
+  - job_name: docker
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+    relabel_configs:
+      # 去掉 container name 的前导斜杠
+      - source_labels: ['__meta_docker_container_name']
+        regex: '/(.+)'
+        target_label: 'container'
+        replacement: '$1'
+      - source_labels: ['__meta_docker_container_id']
+        target_label: 'container_id'
+      - source_labels: ['__meta_docker_container_log_stream']
+        target_label: 'stream'
+      # 增加环境标签，方便区分开发/测试/生产
+      - source_labels: []
+        target_label: 'env'
+        replacement: 'dev'
+
+    pipeline_stages:
+      # 处理 Docker json-file 输出，并解析应用级 JSON
+      - docker: {}
+      # 解析 entry 本身的内层 JSON 并提取字段
+      - json:
+          expressions:
+            level: level
+            msg: msg
+            component: component
+            app_name: app_name
+            trace_id: trace_id
+            span_id: span_id
+            user_id: user_id
+            kind: kind
+            operation: operation
+      # 将提取的字段写成标签
+      - labels:
+          level:
+          component:
+          app_name:
+          trace_id:
+          span_id:
+          user_id:
+      # 添加特殊标签以快速筛选错误
+      - template:
+          source: level
+          template: '{{ if eq .Value "ERROR" }}true{{ else }}false{{ end }}'
+          dest: is_error
+      - labels:
+          is_error:
+
+# 注意: 在Kubernetes环境中推荐使用以下配置，而非上面的docker配置
+# - job_name: kubernetes
+#   kubernetes_sd_configs:
+#     - role: pod
+#   pipeline_stages:
+#     - cri: {}
+#     - json:
+#         expressions:
+#           level: level
+#           component: component
+#           app_name: app_name
+#           trace_id: trace_id
+#     - labels:
+#         level:
+#         component:
+#         app_name:
+#         trace_id:
