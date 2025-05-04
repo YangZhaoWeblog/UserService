@@ -1,4 +1,4 @@
-package pkg
+package other
 
 import (
 	"github.com/YangZhaoWeblog/UserService/internal/conf"
