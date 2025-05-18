@@ -2,6 +2,8 @@ package service
 
 import (
 	"context"
+	"fmt"
+
 	"github.com/YangZhaoWeblog/GoldenTakin/takin_log"
 	v1 "github.com/YangZhaoWeblog/UserService/api/user/v1"
 	"github.com/YangZhaoWeblog/UserService/internal/biz"
@@ -11,27 +13,58 @@ import (
 // UserService 是用户服务
 type UserService struct {
 	v1.UnimplementedUserServer
-
 	uc        *biz.UserUsecase
 	logHelper *takin_log.TakinLogger
 }
 
 // NewUserService 创建用户服务
 func NewUserService(uc *biz.UserUsecase, log *takin_log.TakinLogger) *UserService {
-	return &UserService{uc: uc, logHelper: log}
+	return &UserService{uc: uc,
+		logHelper: log,
+	}
+}
+
+func getAuthTypeString(user *biz.User, req *v1.RegisterRequest) *biz.User {
+	user.AuthType = biz.AuthTypeNone
+	if req.GetPhone() != nil {
+		user.AuthType = biz.AuthTypePhone
+		user.Phone = biz.Phone{
+			Number:           req.GetPhone().GetPhoneNumber(),
+			VerificationCode: req.GetPhone().GetVerificationCode(),
+		}
+	} else if req.GetGoogle() != nil {
+		user.AuthType = biz.AuthTypeGoogle
+		user.Phone = biz.Phone{
+			Number:           req.GetPhone().GetPhoneNumber(),
+			VerificationCode: req.GetPhone().GetVerificationCode(),
+		}
+	}
+	return user
 }
 
 // Register 实现注册接口
 func (s *UserService) Register(ctx context.Context, req *v1.RegisterRequest) (*v1.RegisterReply, error) {
-	//s.logHelper.InfoContext(ctx, "用户注册成功", "user_id", user.ID)
+	user := biz.User{
+		Nickname: req.GetNickname(),
+	}
+	getAuthTypeString(&user, req)
+
+	// 1. 注册
+	createdUser, err := s.uc.CreateUser(ctx, &user)
+	if err != nil {
+		return nil, nil
+	}
 
 	return &v1.RegisterReply{
-		Success:  true,
-		Message:  "注册成功",
 		UserInfo: &v1.UserInfo{
-			//UserId:    fmt.Sprintf("%d", user.ID),
-			//Nickname:  user.Nickname,
-			//AvatarUrl: user.AvatarURL,
+			UserId:   fmt.Sprintf("%d", user.ID),
+			Nickname: createdUser.Nickname,
+		},
+		AuthToken: &v1.AuthToken{
+			AccessToken:  createdUser.AuthToken.AccessToken,
+			RefreshToken: createdUser.AuthToken.RefreshToken,
+			ExpiresIn:    createdUser.AuthToken.ExpiresIn,
+			TokenType:    "Bearer",
 		},
 	}, nil
 }

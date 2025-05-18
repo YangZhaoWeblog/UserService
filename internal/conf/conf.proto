@@ -62,6 +62,12 @@ message Data {
     google.protobuf.Duration write_timeout = 4;
   }
 
+  message Jwt {
+    string signing_key = 1;
+    int32 expires_time = 2;
+  }
+
   Database database = 1;
   Redis redis = 2;
+  Jwt jwt = 3;
 }

@@ -44,7 +44,7 @@ func (r *userRepo) FindByID(ctx context.Context, id int64) (*biz.User, error) {
 func (r *userRepo) FindByPhone(ctx context.Context, phone string) (*biz.User, error) {
 	// TODO: 实现通过手机号查找用户逻辑
 	return &biz.User{
-		Phone:    phone,
+		//Phone:    nil,
 		Username: "user_" + phone,
 		Nickname: "用户" + phone,
 	}, nil

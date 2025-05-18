@@ -2,9 +2,10 @@ package observability
 
 import (
 	"fmt"
+	"os"
+
 	takin_adapter "github.com/YangZhaoWeblog/GoldenTakin/takin_log/adapter"
 	"github.com/go-kratos/kratos/v2/log"
-	"os"
 
 	"github.com/YangZhaoWeblog/UserService/internal/conf"
 

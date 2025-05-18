@@ -9,7 +9,6 @@ import (
 	"github.com/YangZhaoWeblog/UserService/internal/server/middleware"
 	"github.com/YangZhaoWeblog/UserService/internal/service"
 	"github.com/go-kratos/kratos/v2/middleware/metrics"
-	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -25,7 +24,7 @@ func NewHTTPServer(c *conf.Server, greeter *service.GreeterService,
 ) *http.Server {
 	var opts = []http.ServerOption{
 		http.Middleware(
-			recovery.Recovery(), //自动捕获 panic 确保线上服务不崩溃，测试环境应当尽可能让崩溃
+			//recovery.Recovery(), //自动捕获 panic 确保线上服务不崩溃，测试环境应当尽可能让崩溃
 			tracing.Server(),
 			metrics.Server( //指标中间件
 				metrics.WithSeconds(metricsData.Seconds),
@@ -46,8 +45,8 @@ func NewHTTPServer(c *conf.Server, greeter *service.GreeterService,
 	}
 
 	srv := http.NewServer(opts...)
-
 	// Prometheus 定期访问 http://host.docker.internal:8010/metrics, 抓取收集的指标
+	// 仅需再次 http server 暴露，grpc 的请求也会被自动捕获到
 	srv.Handle("/metrics", promhttp.Handler())
 
 	v1.RegisterGreeterHTTPServer(srv, greeter)

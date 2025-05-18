@@ -7,7 +7,6 @@ import (
 	"github.com/YangZhaoWeblog/UserService/internal/observability"
 	"github.com/YangZhaoWeblog/UserService/internal/service"
 	"github.com/go-kratos/kratos/v2/middleware/metrics"
-	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
@@ -21,7 +20,7 @@ func NewGRPCServer(c *conf.Server, greeter *service.GreeterService,
 ) *grpc.Server {
 	var opts = []grpc.ServerOption{
 		grpc.Middleware(
-			recovery.Recovery(), //自动捕获 panic 确保线上服务不崩溃，测试环境应当尽可能让崩溃
+			//recovery.Recovery(), //自动捕获 panic 确保线上服务不崩溃，测试环境应当尽可能让崩溃
 			tracing.Server(),
 			metrics.Server(
 				metrics.WithSeconds(metricsData.Seconds),

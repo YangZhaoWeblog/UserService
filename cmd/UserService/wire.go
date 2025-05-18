@@ -10,6 +10,7 @@ import (
 	"github.com/YangZhaoWeblog/UserService/internal/conf"
 	"github.com/YangZhaoWeblog/UserService/internal/data"
 	"github.com/YangZhaoWeblog/UserService/internal/observability"
+	"github.com/YangZhaoWeblog/UserService/internal/pkg"
 	"github.com/YangZhaoWeblog/UserService/internal/server"
 	"github.com/YangZhaoWeblog/UserService/internal/service"
 
@@ -25,6 +26,7 @@ func wireApp(*conf.Server, *conf.App, *conf.Log, *conf.Data, *conf.Trace) (*krat
 		biz.ProviderSet,
 		service.ProviderSet,
 		server.ProviderSet,
+		pkg.ProviderSet,
 		newApp,
 	))
 }
