@@ -10,6 +10,7 @@ type User struct {
 	ID       int64
 	Username string
 	Nickname string
+	Avatar   string
 
 	AuthType string // 通过什么方式注册的
 	Phone    Phone
